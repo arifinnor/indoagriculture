@@ -12,26 +12,136 @@ defineProps({
 <template>
   <Head title="Welcome" />
 
-  <nav class="navbar bg-base-100">
-    <div class="flex-1">
-      <a class="btn btn-ghost normal-case text-xl">DaisyUI</a>
+  <!-- Home -->
+  <section class="h-screen w-screen" id="home">
+    <div
+      class="hero min-h-screen"
+      style="
+        background-image: url(https://api.lorem.space/image/pizza?w=1000&h=800);
+      "
+    >
+      <div class="hero-overlay bg-opacity-60"></div>
+      <div class="hero-content text-center text-neutral-content">
+        <div class="max-w">
+          <h1
+            class="mb-5 text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl"
+          >
+            Supplying across the world
+          </h1>
+          <p class="mb-5 text-base sm:text-2xl md:text-3xl lg:text-4xl">
+            Indonesian agriculture supplier, trader and exporter.
+          </p>
+          <a href="#our-products" class="btn btn-primary">Get Started</a>
+        </div>
+      </div>
     </div>
-    <div class="flex-none">
-      <ul class="menu menu-horizontal p-0">
-        <li><a>Home</a></li>
-        <li><a>Our Products</a></li>
-        <li><a>About Us</a></li>
-        <li><a>Contact Us</a></li>
-      </ul>
+  </section>
+  <!-- End home -->
+
+  <!-- Our products -->
+  <section
+    class="pb-5 min-h-screen"
+    style="
+      background-image: url(https://api.lorem.space/image/pizza?w=1000&h=800);
+    "
+    id="our-products"
+  >
+    <h1 class="py-5 text-5xl text-center text-neutral-content font-bold">
+      Our Products
+    </h1>
+
+    <div class="flex flex-wrap gap-4 justify-evenly">
+      <div class="card w-96 bg-base-100 shadow-xl">
+        <figure class="p-2">
+          <img
+            class="mask mask-circle"
+            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            alt="Shoes"
+          />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">
+            Shoes
+            <div class="badge badge-secondary">NEW</div>
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet,
+            repudiandae?
+          </p>
+          <div class="card-actions justify-end">
+            <a class="btn btn-primary">Check this out!</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card w-96 bg-base-100 shadow-xl">
+        <figure>
+          <img
+            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            alt="Shoes"
+          />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Shoes</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,
+            eius!
+          </p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary">Check this out!</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card w-96 bg-base-100 shadow-xl image-full">
+        <figure>
+          <img
+            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            alt="Shoes"
+          />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Shoes!</h2>
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam,
+            assumenda.
+          </p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary">Buy Now</button>
+          </div>
+        </div>
+      </div>
     </div>
-  </nav>
+  </section>
+  <!-- End our products -->
 
-  <main class="container mx-auto">
-    <!-- ... -->
+  <!-- About us -->
+  <section
+    class="h-screen w-screen"
+    style="
+      background-image: url(https://api.lorem.space/image/pizza?w=1000&h=800);
+    "
+    id="about-us"
+  >
+    <h1 class="py-5 text-5xl text-center text-neutral-content font-bold">
+      About us
+    </h1>
+  </section>
+  <!-- End about us -->
 
-    <h1>Supplying Across The World</h1>
-    <h3>Indonesian Agriculture Supplier, Trader and Exporter</h3>
-  </main>
+  <!-- Contact us -->
+  <section
+    class="h-screen w-screen"
+    style="
+      background-image: url(https://api.lorem.space/image/pizza?w=1000&h=800);
+    "
+    id="contact-us"
+  >
+    <h1 class="py-5 text-5xl text-center text-neutral-content font-bold">
+      Contact Us
+    </h1>
+  </section>
+  <!-- End contact us -->
 
   <!-- <div
     class="
