@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link } from "@inertiajs/inertia-vue3";
+import { onMounted } from "vue";
 
 defineProps({
   canLogin: Boolean,
@@ -7,25 +8,54 @@ defineProps({
   laravelVersion: String,
   phpVersion: String,
 });
+
+const hamburgerMenu = () => {
+  const hamburger = document.querySelector("#hamburger-menu");
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("hamburger-active");
+  });
+};
+
+// lifecycle hooks
+onMounted(() => {
+  hamburgerMenu();
+});
 </script>
 
 <template>
   <Head title="Welcome" />
 
+  <!-- navbar -->
+  <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
+    <div class="container">
+      <div class="flex items-center justify-between relative">
+        <div class="px-4">
+          <a href="#home" class="font-bold text-lg text-slate-100 block py-6">
+            Indo Tropical Agriculture
+          </a>
+        </div>
+        <div class="flex items-center px-4">
+          <button type="button" id="hamburger-menu" class="block absolute right-4">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- End navbar -->
+
   <!-- Home -->
-  <section class="h-screen w-screen" id="home">
+  <section class="max-h-screen w-screen" id="home">
     <div
       class="hero min-h-screen"
-      style="
-        background-image: url(https://api.lorem.space/image/pizza?w=1000&h=800);
-      "
+      style="background-image: url(https://api.lorem.space/image/pizza?w=1000&h=800)"
     >
       <div class="hero-overlay bg-opacity-60"></div>
       <div class="hero-content text-center text-neutral-content">
         <div class="max-w">
-          <h1
-            class="mb-5 text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl"
-          >
+          <h1 class="mb-5 text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl">
             Supplying across the world
           </h1>
           <p class="mb-5 text-base sm:text-2xl md:text-3xl lg:text-4xl">
@@ -39,18 +69,9 @@ defineProps({
   <!-- End home -->
 
   <!-- Our products -->
-  <section
-    class="pb-5 min-h-screen"
-    style="
-      background-image: url(https://api.lorem.space/image/pizza?w=1000&h=800);
-    "
-    id="our-products"
-  >
-    <h1 class="py-5 text-5xl text-center text-neutral-content font-bold">
-      Our Products
-    </h1>
-
-    <div class="flex flex-wrap gap-4 justify-evenly">
+  <section class="pb-5 min-h-screen" id="our-products">
+    <h1 class="py-5 text-5xl text-center text-slate-500 font-bold">Our Products</h1>
+    <div class="flex flex-wrap gap-4 items-center">
       <div class="card w-96 bg-base-100 shadow-xl">
         <figure class="p-2">
           <img
@@ -75,39 +96,93 @@ defineProps({
       </div>
 
       <div class="card w-96 bg-base-100 shadow-xl">
-        <figure>
+        <figure class="p-2">
           <img
+            class="mask mask-circle"
             src="https://api.lorem.space/image/shoes?w=400&h=225"
             alt="Shoes"
           />
         </figure>
         <div class="card-body">
-          <h2 class="card-title">Shoes</h2>
+          <h2 class="card-title">
+            Shoes
+            <div class="badge badge-secondary">NEW</div>
+          </h2>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,
-            eius!
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet,
+            repudiandae?
           </p>
           <div class="card-actions justify-end">
-            <button class="btn btn-primary">Check this out!</button>
+            <a class="btn btn-primary">Check this out!</a>
           </div>
         </div>
       </div>
 
-      <div class="card w-96 bg-base-100 shadow-xl image-full">
-        <figure>
+      <div class="card w-96 bg-base-100 shadow-xl">
+        <figure class="p-2">
           <img
+            class="mask mask-circle"
             src="https://api.lorem.space/image/shoes?w=400&h=225"
             alt="Shoes"
           />
         </figure>
         <div class="card-body">
-          <h2 class="card-title">Shoes!</h2>
+          <h2 class="card-title">
+            Shoes
+            <div class="badge badge-secondary">NEW</div>
+          </h2>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam,
-            assumenda.
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet,
+            repudiandae?
           </p>
           <div class="card-actions justify-end">
-            <button class="btn btn-primary">Buy Now</button>
+            <a class="btn btn-primary">Check this out!</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card w-96 bg-base-100 shadow-xl">
+        <figure class="p-2">
+          <img
+            class="mask mask-circle"
+            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            alt="Shoes"
+          />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">
+            Shoes
+            <div class="badge badge-secondary">NEW</div>
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet,
+            repudiandae?
+          </p>
+          <div class="card-actions justify-end">
+            <a class="btn btn-primary">Check this out!</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card w-96 bg-base-100 shadow-xl">
+        <figure class="p-2">
+          <img
+            class="mask mask-circle"
+            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            alt="Shoes"
+          />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">
+            Shoes
+            <div class="badge badge-secondary">NEW</div>
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet,
+            repudiandae?
+          </p>
+          <div class="card-actions justify-end">
+            <a class="btn btn-primary">Check this out!</a>
           </div>
         </div>
       </div>
@@ -116,30 +191,14 @@ defineProps({
   <!-- End our products -->
 
   <!-- About us -->
-  <section
-    class="h-screen w-screen"
-    style="
-      background-image: url(https://api.lorem.space/image/pizza?w=1000&h=800);
-    "
-    id="about-us"
-  >
-    <h1 class="py-5 text-5xl text-center text-neutral-content font-bold">
-      About us
-    </h1>
+  <section class="h-screen w-screen" id="about-us">
+    <h1 class="py-5 text-5xl text-center text-neutral-content font-bold">About us</h1>
   </section>
   <!-- End about us -->
 
   <!-- Contact us -->
-  <section
-    class="h-screen w-screen"
-    style="
-      background-image: url(https://api.lorem.space/image/pizza?w=1000&h=800);
-    "
-    id="contact-us"
-  >
-    <h1 class="py-5 text-5xl text-center text-neutral-content font-bold">
-      Contact Us
-    </h1>
+  <section class="h-screen w-screen" id="contact-us">
+    <h1 class="py-5 text-5xl text-center text-neutral-content font-bold">Contact Us</h1>
   </section>
   <!-- End contact us -->
 
