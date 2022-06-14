@@ -1,6 +1,7 @@
 <script setup>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeButton from "@/Components/Button.vue";
+import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import { ref, useAttrs, onMounted } from "vue";
 
@@ -40,9 +41,7 @@ const submit = () => {
                   placeholder="Type here"
                   class="input input-bordered w-full"
                 />
-                <div v-if="form.errors.name" class="mt-2 text-red-400">
-                  {{ form.errors.name }}
-                </div>
+                <BreezeValidationErrors class="mt-1" />
               </div>
               <div class="flex items-center justify-end mt-4">
                 <Link

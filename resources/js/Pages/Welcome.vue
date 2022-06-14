@@ -69,55 +69,9 @@ onMounted(() => {
   <!-- End home -->
 
   <!-- Our products -->
-  <section class="pb-5 min-h-screen" id="our-products">
+  <section class="pb-5 max-h-min" id="our-products">
     <h1 class="py-5 text-5xl text-center text-slate-500 font-bold">Our Products</h1>
-    <div class="flex flex-wrap gap-4 items-center">
-      <div class="card w-96 bg-base-100 shadow-xl">
-        <figure class="p-2">
-          <img
-            class="mask mask-circle"
-            src="https://api.lorem.space/image/shoes?w=400&h=225"
-            alt="Shoes"
-          />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">
-            Shoes
-            <div class="badge badge-secondary">NEW</div>
-          </h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet,
-            repudiandae?
-          </p>
-          <div class="card-actions justify-end">
-            <a class="btn btn-primary">Check this out!</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card w-96 bg-base-100 shadow-xl">
-        <figure class="p-2">
-          <img
-            class="mask mask-circle"
-            src="https://api.lorem.space/image/shoes?w=400&h=225"
-            alt="Shoes"
-          />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">
-            Shoes
-            <div class="badge badge-secondary">NEW</div>
-          </h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet,
-            repudiandae?
-          </p>
-          <div class="card-actions justify-end">
-            <a class="btn btn-primary">Check this out!</a>
-          </div>
-        </div>
-      </div>
-
+    <div class="flex flex-wrap justify-center gap-4 items-center">
       <div class="card w-96 bg-base-100 shadow-xl">
         <figure class="p-2">
           <img
@@ -191,14 +145,30 @@ onMounted(() => {
   <!-- End our products -->
 
   <!-- About us -->
-  <section class="h-screen w-screen" id="about-us">
-    <h1 class="py-5 text-5xl text-center text-neutral-content font-bold">About us</h1>
+  <section class="pb-5 max-h-min" id="about-us">
+    <h1 class="py-5 text-5xl text-center text-slate-700 font-bold">About us</h1>
+    <div class="mx-5">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus odit molestias
+        cumque. Cum laborum accusantium distinctio porro officia eos doloremque ducimus
+        tempore, fugit ad ipsum, ipsa rerum cumque iure numquam ab sint, earum natus
+        maiores excepturi voluptatibus omnis? Cupiditate excepturi minus ullam praesentium
+        nemo quos ipsam nam impedit illum maiores?
+      </p>
+    </div>
   </section>
   <!-- End about us -->
 
   <!-- Contact us -->
-  <section class="h-screen w-screen" id="contact-us">
-    <h1 class="py-5 text-5xl text-center text-neutral-content font-bold">Contact Us</h1>
+  <section class="pb-5 max-h-min" id="contact-us">
+    <h1 class="py-5 text-5xl text-center text-slate-700 font-bold">Contact Us</h1>
+    <div class="mx-5">
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur nisi enim
+        inventore vitae necessitatibus qui, sed sapiente nobis, dicta amet voluptatibus
+        excepturi ex, corrupti delectus.
+      </p>
+    </div>
   </section>
   <!-- End contact us -->
 

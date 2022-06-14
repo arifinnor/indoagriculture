@@ -11,7 +11,7 @@ const showingNavigationDropdown = ref(false);
 const menus = ref([
   { name: "Dashboard", route: "dashboard", active: "dashboard" },
   { name: "Products", route: "products.index", active: "products.*" },
-  { name: "Product Attributes", route: "attributes.index", active: "attributes.*" },
+  { name: "Product Properties", route: "attributes.index", active: "attributes.*" },
 ]);
 </script>
 

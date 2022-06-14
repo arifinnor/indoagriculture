@@ -14,10 +14,19 @@ class AttributeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('ProductAttribute/Index', [
-            'attributes' => Attribute::all()
+
+        return Inertia::render('Attribute/Index', [
+            'attributes' => Attribute::when($request->search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+                ->paginate(15)
+                ->withQueryString(),
+            'filters' => [
+                'search' => $request->search,
+                'paginate' => 15
+            ],
         ]);
     }
 
@@ -28,7 +37,7 @@ class AttributeController extends Controller
      */
     public function create()
     {
-        return Inertia::render('ProductAttribute/Create');
+        return Inertia::render('Attribute/Create');
     }
 
     /**
@@ -45,22 +54,13 @@ class AttributeController extends Controller
                 'string',
                 'min:3'
             ]
-        ]);
+        ])->validate();
 
-        if ($validator->fails()) {
-            return redirect()
-                ->route('attributes.create')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $validated = $validator->validated();
-
-        Attribute::create($validated);
+        Attribute::create($validator);
 
         return redirect()
             ->route('attributes.index')
-            ->withSuccess('success');
+            ->with('success', 'Properties created!');
     }
 
     /**
