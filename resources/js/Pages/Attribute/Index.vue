@@ -4,18 +4,21 @@ import { Inertia } from '@inertiajs/inertia';
 import { Head, Link, usePage } from '@inertiajs/inertia-vue3';
 import { throttle } from 'lodash';
 import { ref, watch } from 'vue';
+import Pagination from '@/Components/Pagination.vue';
 
 const props = defineProps({
   attributes: Object,
   filters: {
     search: String,
-    paginate: Number,
+    rows: Number,
   },
 });
-
 const search = ref(props.filters.search);
-const paginate = ref(props.filters.paginate);
+const rows = ref(props.filters.rows);
 const hasSuccess = usePage().props.value.flash.success;
+const setRows = (rows) => {
+  Inertia.get('/attributes', { rows: rows }, { preserveState: true, replace: true });
+};
 
 watch(
   search,
@@ -79,14 +82,18 @@ watch(
         </div>
         <!-- End success alert -->
 
-        <div class="flex justify-between">
-          <Link :href="route('attributes.create')" class="btn mb-3">
-            Create New Property
+        <div class="flex justify-between mb-3">
+          <Link :href="route('attributes.create')" class="btn btn-accent text-white">
+            Create Property
           </Link>
 
           <div class="flex gap-2">
-            <select class="select select-bordered w-full max-w-fit" v-model="paginate">
-              <option value="15">15</option>
+            <select
+              class="select select-bordered w-full max-w-fit"
+              v-model="rows"
+              @change="setRows(rows)"
+            >
+              <option value="10">10</option>
               <option value="50">50</option>
               <option value="100">100</option>
             </select>
@@ -111,6 +118,7 @@ watch(
                       <tr>
                         <th width="15%">#</th>
                         <th>Name</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -120,39 +128,24 @@ watch(
                         class="hover"
                       >
                         <td>
-                          <Link href="#">
-                            {{ attribute.id }}
-                          </Link>
+                          {{ attribute.id }}
                         </td>
                         <td>
-                          <Link href="#">
-                            {{ attribute.name }}
-                          </Link>
+                          {{ attribute.name }}
                         </td>
-                        <!-- <th>
-                        <button type="button" class="btn btn-xs btn-info">Details</button>
-                      </th> -->
+                        <th>
+                          <Link
+                            class="btn btn-xs btn-ghost"
+                            :href="`/attributes/${attribute.id}/edit`"
+                            >Edit</Link
+                          >
+                        </th>
                       </tr>
                     </tbody>
-                    <tfoot>
-                      <!-- <tr>
-                      <td colspan="3">
-                        <div class="flex flex-warp justify-end btn-group">
-                          <Link
-                            :href="productAttributes.prev_page_url"
-                            class="btn btn-xs btn-outline"
-                            >Previous</Link
-                          >
-                          <Link
-                            :href="productAttributes.next_page_url"
-                            class="btn btn-xs btn-outline"
-                            >Next</Link
-                          >
-                        </div>
-                      </td>
-                    </tr> -->
-                    </tfoot>
                   </table>
+                  <div>
+                    <Pagination class="mt-4" :links="attributes.links" />
+                  </div>
                 </div>
               </div>
             </div>

@@ -16,16 +16,17 @@ class AttributeController extends Controller
      */
     public function index(Request $request)
     {
+        $rows = $request->rows ?? 10;
 
         return Inertia::render('Attribute/Index', [
             'attributes' => Attribute::when($request->search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
             })
-                ->paginate(15)
+                ->paginate($rows)
                 ->withQueryString(),
             'filters' => [
                 'search' => $request->search,
-                'paginate' => 15
+                'rows' => $rows
             ],
         ]);
     }
@@ -82,7 +83,9 @@ class AttributeController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Inertia::render('Attribute/Edit', [
+            'attributes' => Attribute::find($id)
+        ]);
     }
 
     /**

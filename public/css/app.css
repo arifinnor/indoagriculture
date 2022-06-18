@@ -1378,6 +1378,23 @@ html {
 .btn-primary:focus-visible {
   outline: 2px solid hsl(var(--p));
 }
+.btn-accent {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--a) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--a) / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: hsl(var(--ac) / var(--tw-text-opacity));
+}
+.btn-accent:hover, .btn-accent.btn-active {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--af, var(--a)) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--af, var(--a)) / var(--tw-bg-opacity));
+}
+.btn-accent:focus-visible {
+  outline: 2px solid hsl(var(--a));
+}
 .btn-info {
   --tw-border-opacity: 1;
   border-color: hsl(var(--in) / var(--tw-border-opacity));
@@ -1685,6 +1702,9 @@ body[dir="rtl"] .checkbox:checked,
 }
 .drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-primary {
   outline: 2px solid hsl(var(--p));
+}
+.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-accent {
+  outline: 2px solid hsl(var(--a));
 }
 .drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-info {
   outline: 2px solid hsl(var(--in));
@@ -2297,6 +2317,18 @@ body[dir="rtl"] .checkbox:checked,
 .mb-4 {
   margin-bottom: 1rem;
 }
+.-mb-1 {
+  margin-bottom: -0.25rem;
+}
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+.mr-1 {
+  margin-right: 0.25rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
 .block {
   display: block;
 }
@@ -2495,6 +2527,9 @@ body[dir="rtl"] .checkbox:checked,
 .overflow-x-auto {
   overflow-x: auto;
 }
+.overflow-y-auto {
+  overflow-y: auto;
+}
 .scroll-smooth {
   scroll-behavior: smooth;
 }
@@ -2648,6 +2683,10 @@ body[dir="rtl"] .checkbox:checked,
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
+}
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 .pt-8 {
   padding-top: 2rem;
@@ -2926,6 +2965,10 @@ body[dir="rtl"] .checkbox:checked,
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
+.hover\:bg-white:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
 .hover\:text-gray-500:hover {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
@@ -2969,6 +3012,10 @@ body[dir="rtl"] .checkbox:checked,
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
+.focus\:border-indigo-500:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(99 102 241 / var(--tw-border-opacity));
+}
 .focus\:bg-gray-100:focus {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -2996,6 +3043,10 @@ body[dir="rtl"] .checkbox:checked,
 .focus\:text-gray-500:focus {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+.focus\:text-indigo-500:focus {
+  --tw-text-opacity: 1;
+  color: rgb(99 102 241 / var(--tw-text-opacity));
 }
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
