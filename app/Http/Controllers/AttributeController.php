@@ -61,7 +61,7 @@ class AttributeController extends Controller
 
         return redirect()
             ->route('attributes.index')
-            ->with('success', 'Properties created!');
+            ->with('success', 'Property created!');
     }
 
     /**
@@ -84,7 +84,7 @@ class AttributeController extends Controller
     public function edit($id)
     {
         return Inertia::render('Attribute/Edit', [
-            'attributes' => Attribute::find($id)
+            'attribute' => Attribute::find($id)
         ]);
     }
 
@@ -97,7 +97,19 @@ class AttributeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => [
+                'required',
+                'string',
+                'min:3'
+            ]
+        ])->validate();
+
+        Attribute::where('id', $id)->update($validator);
+
+        return redirect()
+            ->route('attributes.index')
+            ->with('success', 'Property updated!');
     }
 
     /**
@@ -108,6 +120,10 @@ class AttributeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Attribute::destroy($id);
+
+        return redirect()
+            ->route('attributes.index')
+            ->with('success', 'Property deleted!');
     }
 }

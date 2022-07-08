@@ -3,7 +3,7 @@ import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeButton from "@/Components/Button.vue";
 import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
-import { ref, useAttrs, onMounted } from "vue";
+import VueFeather from "vue-feather";
 
 const form = useForm({
   name: null,
@@ -15,6 +15,7 @@ const submit = () => {
 </script>
 
 <template>
+
   <Head title="Product" />
 
   <BreezeAuthenticatedLayout>
@@ -35,29 +36,20 @@ const submit = () => {
                 <label class="label">
                   <span class="label-text">What is your product properties name?</span>
                 </label>
-                <input
-                  v-model="form.name"
-                  type="text"
-                  placeholder="Type here"
-                  class="input input-bordered w-full"
-                />
+                <input v-model="form.name" type="text" placeholder="Type here" class="input input-bordered w-full" />
                 <BreezeValidationErrors class="mt-1" />
               </div>
-              <div class="flex items-center justify-end mt-4">
-                <Link
-                  :href="route('attributes.index')"
-                  class="btn btn-error btn-outline btn-sm"
-                >
-                  Cancel
-                </Link>
-
-                <BreezeButton
-                  class="ml-4 btn btn-sm"
-                  :class="{ 'opacity-25': form.processing }"
-                  :disabled="form.processing"
-                >
-                  Save
-                </BreezeButton>
+              <div class="flex flex-wrap justify-between mt-4">
+                <div class="flex flex-wrap gap-2">
+                  <BreezeButton class="btn-sm" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    <vue-feather type="save"></vue-feather>
+                    <span class="px-2">Save property</span>
+                  </BreezeButton>
+                  <!-- <Link :href="route('attributes.index')" class="btn btn-sm btn-ghost">
+                  <vue-feather type="rotate-ccw"></vue-feather>
+                  <span class="px-2">Back to previous page</span>
+                  </Link> -->
+                </div>
               </div>
             </form>
           </div>

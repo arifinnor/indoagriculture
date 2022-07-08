@@ -5,22 +5,36 @@ import BreezeLabel from "@/Components/Label.vue";
 import BreezeButton from "@/Components/Button.vue";
 
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
-import { ref, useAttrs } from "vue";
+import { computed } from 'vue';
 
-const { product_attributes } = useAttrs();
-const initialAttributes = product_attributes?.map((item) => {
-  return { ...item, value: "" };
+const props = defineProps({
+  product: {
+    name: String,
+    description: String,
+    product_attributes: Array,
+    product_images: Array,
+  },
+  properties: Array,
 });
+
+// const initialAttributes = props.properties?.map((item) => {
+//   return { ...item, value: "" };
+// });
 
 const form = useForm({
-  name: null,
-  description: null,
-  images: {
-    thumbnail: null,
-    background: null,
-  },
-  attrs: initialAttributes,
+  name: props.product.name,
+  description: props.product.description,
+  images: props.product_images,
+  attrs: props.product.product_attributes,
 });
+
+// const propertiesWithValue = computed(() => {
+//   const val = props.product_attributes.filter((item) => {
+//     return item.id === 1
+//   })
+//   console.log(val[0].value);
+//   // return val.id;
+// });
 
 const submit = () => {
   form.post(route('products.store'));
@@ -52,13 +66,13 @@ const submit = () => {
                   placeholder="Type here"></textarea>
               </div>
               <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-3">
-                <template v-for="(attribute, index) in form.attrs">
+                <template v-for="(property, index) in form.attrs">
                   <div class="form-control">
-                    <BreezeLabel :for="attribute.name" :value="attribute.name" />
-                    <BreezeInput v-model="attribute.value" type="text" :id="attribute.name"
-                      class="input input-bordered w-full" :placeholder="attribute.name" />
-                    <BreezeInput v-model="attribute.id" type="hidden" class="input input-bordered w-full"
-                      :placeholder="attribute.id" />
+                    <BreezeLabel :for="property.name" :value="property.name" />
+                    <BreezeInput v-model="property.value" type="text" :id="property.name"
+                      class="input input-bordered w-full" :placeholder="property.name" />
+                    <BreezeInput v-model="property.id" type="hidden" class="input input-bordered w-full"
+                      :placeholder="property.id" />
 
                   </div>
                 </template>
