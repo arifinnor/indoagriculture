@@ -108,8 +108,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+
         return Inertia::render('Product/Edit', [
-            'product' => Product::with(['productAttributes', 'productImages'])->find($id),
+            'product' => Product::with(['attributes'])->where('id', $id)->get()->first(),
             'properties' => Attribute::all(),
         ]);
     }

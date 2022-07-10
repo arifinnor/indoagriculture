@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -20,13 +20,10 @@ class Product extends Model
         'is_active' => 'bool'
     ];
 
-    public function productAttributes(): HasMany
-    {
-        return $this->hasMany(ProductAttribute::class);
-    }
+    public $incrementing = true;
 
-    public function productImages(): HasMany
+    public function attributes(): BelongsToMany
     {
-        return $this->hasMany(ProductImage::class);
+        return $this->belongsToMany(Attribute::class, 'product_attributes')->withPivot('value');
     }
 }

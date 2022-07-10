@@ -13,9 +13,4 @@ class Attribute extends Model
     protected $fillable = [
         'name'
     ];
-
-    public function productAttributes(): HasMany
-    {
-        return $this->hasMany(ProductAttribute::class);
-    }
 }
