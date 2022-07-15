@@ -3,9 +3,10 @@ import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeInput from "@/Components/Input.vue";
 import BreezeLabel from "@/Components/Label.vue";
 import BreezeButton from "@/Components/Button.vue";
-
+import VueFeather from "vue-feather";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import { computed } from 'vue';
+
 
 const props = defineProps({
   product: {
@@ -17,28 +18,19 @@ const props = defineProps({
   properties: Array,
 });
 
-// const initialAttributes = props.properties?.map((item) => {
-//   return { ...item, value: "" };
-// });
-
 const form = useForm({
   name: props.product.name,
   description: props.product.description,
   images: props.product_images,
-  attrs: props.product.product_attributes,
+  attrs: props.product.attributes,
 });
 
-// const propertiesWithValue = computed(() => {
-//   const val = props.product_attributes.filter((item) => {
-//     return item.id === 1
-//   })
-//   console.log(val[0].value);
-//   // return val.id;
-// });
-
 const submit = () => {
-  form.post(route('products.store'));
+  form.post(route('products.update'));
 }
+
+const filteredProperties = 0;
+
 </script>
 
 <template>
@@ -69,7 +61,7 @@ const submit = () => {
                 <template v-for="(property, index) in form.attrs">
                   <div class="form-control">
                     <BreezeLabel :for="property.name" :value="property.name" />
-                    <BreezeInput v-model="property.value" type="text" :id="property.name"
+                    <BreezeInput v-model="property.pivot.value" type="text" :id="property.name"
                       class="input input-bordered w-full" :placeholder="property.name" />
                     <BreezeInput v-model="property.id" type="hidden" class="input input-bordered w-full"
                       :placeholder="property.id" />
@@ -78,6 +70,7 @@ const submit = () => {
                 </template>
               </div>
               <div class="form-control mt-3">
+                <BreezeLabel value="Cover photo" />
                 <input type="file" @input="form.images.thumbnail = $event.target.files[0]" />
                 <progress v-if="form.progress" :value="form.progress.percentage" max="100">
                   {{ form.progress.percentage }}%

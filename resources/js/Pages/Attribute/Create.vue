@@ -41,14 +41,10 @@ const submit = () => {
               </div>
               <div class="flex flex-wrap justify-between mt-4">
                 <div class="flex flex-wrap gap-2">
-                  <BreezeButton class="btn-sm" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                  <BreezeButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     <vue-feather type="save"></vue-feather>
-                    <span class="px-2">Save property</span>
+                    <span class="px-2">Save</span>
                   </BreezeButton>
-                  <!-- <Link :href="route('attributes.index')" class="btn btn-sm btn-ghost">
-                  <vue-feather type="rotate-ccw"></vue-feather>
-                  <span class="px-2">Back to previous page</span>
-                  </Link> -->
                 </div>
               </div>
             </form>

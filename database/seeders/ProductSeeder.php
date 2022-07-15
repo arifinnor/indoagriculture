@@ -17,14 +17,13 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::factory(4)->create();
+        Product::factory(5)->create();
         $faker = \Faker\Factory::create();
 
         foreach (Product::cursor() as $product) {
             foreach (Attribute::cursor() as $attr) {
                 $product->productAttributes()->create(['attribute_id' => $attr->id]);
             }
-
 
             foreach (ProductImage::getImageType() as $type) {
                 $product->productImages()->create([

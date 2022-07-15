@@ -7,7 +7,9 @@ use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -57,31 +59,50 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' =>  'required|string|min:3',
             'description' => 'required|string',
-            'images.thumbnail' => 'required|image',
-            'images.background' => 'required|image',
-            'attrs.*.id' => 'required',
+            'images.thumbnail' => [
+                'required',
+                'image',
+                // Rule::dimensions()->maxHeight(800)->maxWidth(800)->ratio(1 / 1)
+            ],
+            'images.background' =>  [
+                'required',
+                'image',
+                // Rule::dimensions()->maxHeight(1200)->maxWidth(1200)->ratio(1 / 1)
+            ],
+            'attrs.*.id' => 'nullable',
             'attrs.*.value' => 'nullable',
         ])->validate();
 
-        $product = Product::create([
-            'name' => $validator['name'],
-            'description' => $validator['description'],
-            'is_active' => true,
-        ]);
+        try {
 
-        foreach ($validator['attrs'] as $attr) {
-            $product->productAttributes()->create([
-                'attribute_id' => $attr['id'],
-                'value' => $attr['value']
-            ]);
-        }
+            DB::beginTransaction();
 
-        foreach (ProductImage::getImageType() as $type) {
-            $product->productImages()->create([
-                'title' => "{$type}-{$product->id}",
-                'url' => $request->file("images.{$type}")->store('images'),
-                'type' => $type,
+            $product = Product::create([
+                'name' => $validator['name'],
+                'description' => $validator['description'],
+                'is_active' => true,
             ]);
+
+            foreach ($validator['attrs'] as $attr) {
+                $product->productAttributes()->create([
+                    'attribute_id' => $attr['id'],
+                    'value' => $attr['value']
+                ]);
+            }
+
+            foreach (ProductImage::getImageType() as $type) {
+
+                $product->productImages()->create([
+                    'title' => "{$type}-{$product->id}",
+                    'url' => $request->file("images.{$type}")->store('uploads'),
+                    'type' => $type,
+                ]);
+            }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return redirect()->back()->with('failed', 'Error occured! ' . $th->getMessage());
         }
 
         return redirect()
