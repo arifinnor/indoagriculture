@@ -33,6 +33,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('attributes', \App\Http\Controllers\AttributeController::class);
 });
 
+Route::get('/products/{product}/summary', \App\Http\Controllers\ProductSummaryController::class)->name('summary');
+
 
 
 require __DIR__ . '/auth.php';

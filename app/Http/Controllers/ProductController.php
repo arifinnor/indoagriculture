@@ -62,19 +62,18 @@ class ProductController extends Controller
             'images.thumbnail' => [
                 'required',
                 'image',
-                // Rule::dimensions()->maxHeight(800)->maxWidth(800)->ratio(1 / 1)
+                Rule::dimensions()->maxHeight(1900)->maxWidth(1900)->ratio(1 / 1)
             ],
             'images.background' =>  [
                 'required',
                 'image',
-                // Rule::dimensions()->maxHeight(1200)->maxWidth(1200)->ratio(1 / 1)
+                Rule::dimensions()->maxHeight(1900)->maxWidth(1900)->ratio(1 / 1)
             ],
             'attrs.*.id' => 'nullable',
             'attrs.*.value' => 'nullable',
         ])->validate();
 
         try {
-
             DB::beginTransaction();
 
             $product = Product::create([
@@ -90,14 +89,21 @@ class ProductController extends Controller
                 ]);
             }
 
+
             foreach (ProductImage::getImageType() as $type) {
+                $file = $request->file("images.{$type}");
+                $ext = $file->getClientOriginalExtension();
+                $fileName = "{$type}-{$product->id}.{$ext}";
+
+                $file->storeAs('public/uploads', $fileName);
 
                 $product->productImages()->create([
                     'title' => "{$type}-{$product->id}",
-                    'url' => $request->file("images.{$type}")->store('uploads'),
+                    'url' => "uploads/{$fileName}",
                     'type' => $type,
                 ]);
             }
+
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -118,7 +124,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        return Inertia::render('Product/Show', [
+            'product' => Product::with(['attributes'])->where('id', $id)->get()->first(),
+
+        ]);
     }
 
     /**

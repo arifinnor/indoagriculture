@@ -86,6 +86,7 @@ watch(
                         <th width="10%">#</th>
                         <th>Name</th>
                         <th>Status</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -108,6 +109,12 @@ watch(
                             <vue-feather type="check" size="14"></vue-feather>
                             {{ product.is_active ? 'Active' : 'Inactive' }}
                           </div>
+                        </td>
+                        <td>
+                          <Link class="flex items-center py-2 btn-link text-neutral"
+                            :href="`/products/${product.id}/summary`">
+                          Summary
+                          </Link>
                         </td>
                       </tr>
                       <tr v-if="products.data.length === 0">
