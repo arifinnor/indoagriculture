@@ -98,7 +98,7 @@ class ProductController extends Controller
                 $file->storeAs('public/uploads', $fileName);
 
                 $product->productImages()->create([
-                    'title' => "{$type}-{$product->id}",
+                    'title' => $validator['name'],
                     'url' => "uploads/{$fileName}",
                     'type' => $type,
                 ]);
