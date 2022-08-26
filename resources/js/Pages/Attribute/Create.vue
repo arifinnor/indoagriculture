@@ -39,13 +39,17 @@ const submit = () => {
                 <input v-model="form.name" type="text" placeholder="Type here" class="input input-bordered w-full" />
                 <BreezeValidationErrors class="mt-1" />
               </div>
-              <div class="flex flex-wrap justify-between mt-4">
-                <div class="flex flex-wrap gap-2">
-                  <BreezeButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    <vue-feather type="save"></vue-feather>
-                    <span class="px-2">Save</span>
-                  </BreezeButton>
-                </div>
+              <div class="flex gap-4 mt-4">
+                <button type="submit" class="btn btn-primary" :class="{ 'opacity-25': form.processing }"
+                  :disabled="form.processing">
+                  <vue-feather type="save"></vue-feather>
+                  <span class="px-2">Save</span>
+                </button>
+
+                <Link :href="route('attributes.index')" class="btn btn-error btn-outline gap-1">
+                <vue-feather type="rotate-ccw"></vue-feather>
+                <span>Cancel</span>
+                </Link>
               </div>
             </form>
           </div>

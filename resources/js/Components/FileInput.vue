@@ -4,7 +4,7 @@ import { ref } from 'vue';
 
 const props = defineProps(['modelValue', 'id', 'type']);
 const emit = defineEmits(['update:modelValue']);
-const imageUrl = ref(null);
+const imageUrl = ref(props.modelValue);
 
 const previewImage = (e) => {
   const file = e.target.files[0];
@@ -14,7 +14,7 @@ const previewImage = (e) => {
 }
 
 const removeImage = () => {
-  imageUrl.value = null
+  imageUrl.value = null;
 
   emit('update:modelValue', null);
 }

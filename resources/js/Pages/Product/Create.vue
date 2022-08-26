@@ -18,15 +18,13 @@ const initialAttributes = props.product_attributes?.map((item) => {
 const form = useForm({
   name: null,
   description: null,
-  images: {
-    thumbnail: null,
-    background: null,
-  },
+  thumbnail: null,
+  background: null,
   attrs: initialAttributes,
 });
 
 const type = {
-  thumbnail: 'Thumbnail photo (MAX. 800x800px)',
+  thumbnail: 'Thumbnail photo (MAX. 1200x1200px)',
   background: 'Cover photo (MAX. 1200x1200px)'
 }
 
@@ -48,18 +46,17 @@ const submit = () => {
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            <form @submit.prevent="submit()">
+            <form @submit.prevent="submit">
               <div class="form-control mt-3">
-                <BreezeLabel value="What is your product name?" />
+                <BreezeLabel value="What's your product name?" />
                 <BreezeInput v-model="form.name" type="text" class="input input-bordered w-full"
                   placeholder="Type here" />
                 <div class="mt-1 font-medium text-red-600" v-if="form.errors.name">
                   {{ form.errors.name }}
                 </div>
-
               </div>
               <div class="form-control mt-3">
-                <BreezeLabel value="How is your product?" />
+                <BreezeLabel value="How's your product?" />
                 <textarea v-model="form.description" class="textarea textarea-bordered w-full h-48"
                   placeholder="Type here"></textarea>
                 <div class="mt-1 font-medium text-red-600" v-if="form.errors.description">
@@ -78,26 +75,33 @@ const submit = () => {
                 </template>
               </div>
               <div class="form-control mt-3">
-                <!-- <input type="file" accept="image" @input="form.images.thumbnail = $event.target.file[0]"> -->
-                <FileInput v-model="form.images.thumbnail" :type="type.thumbnail" id="thumbnail" />
+                <FileInput v-model="form.thumbnail" :type="type.thumbnail" id="thumbnail" />
+                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                  {{ form.progress.percentage }}%
+                </progress>
+                <div class="mt-1 font-medium text-red-600" v-if="form.errors.thumbnail">
+                  {{ form.errors.thumbnail }}
+                </div>
               </div>
               <div class="form-control mt-3">
-                <FileInput v-model="form.images.background" :type="type.background" id="background" />
+                <FileInput v-model="form.background" :type="type.background" id="background" />
+                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                  {{ form.progress.percentage }}%
+                </progress>
+                <div class="mt-1 font-medium text-red-600" v-if="form.errors.background">
+                  {{ form.errors.background }}
+                </div>
               </div>
               <div class="flex items-center justify-end mt-4">
-                <Link :href="route('products.index')" class="btn btn-sm btn-link text-red-600">
-                <span class="flex items-center justify-between gap-1">
-                  <vue-feather type="x"></vue-feather>
-                  Cancel
-                </span>
+                <Link :href="route('products.index')" class="btn btn-error btn-outline gap-1">
+                <vue-feather type="rotate-ccw"></vue-feather>
+                <span>Cancel</span>
                 </Link>
-
-                <BreezeButton class="ml-4 btn" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                  <span class="flex items-center justify-between gap-1">
-                    <vue-feather type="send"></vue-feather>
-                    Save
-                  </span>
-                </BreezeButton>
+                <button type="submit" class="ml-4 btn btn-primary gap-1" :class="{ 'opacity-25': form.processing }"
+                  :disabled="form.processing">
+                  <vue-feather type="save"></vue-feather>
+                  <span>Save</span>
+                </button>
               </div>
             </form>
           </div>

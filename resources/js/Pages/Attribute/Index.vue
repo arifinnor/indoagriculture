@@ -57,8 +57,8 @@ watch(
         <!-- End success alert -->
 
         <div class="flex justify-between mb-3">
-          <Link :href="route('attributes.create')" class="btn btn-accent text-white">
-          <vue-feather type="plus"></vue-feather>
+          <Link :href="route('attributes.create')" class="btn btn-primary gap-1">
+          <vue-feather type="plus-circle"></vue-feather>
           <span>Create Property</span>
           </Link>
 

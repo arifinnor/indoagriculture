@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Attribute;
 use App\Models\Product;
-use App\Models\ProductAttribute;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -54,61 +52,47 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' =>  'required|string|min:3',
-            'description' => 'required|string',
-            'images.thumbnail' => [
-                'required',
-                'image',
-                Rule::dimensions()->maxHeight(1900)->maxWidth(1900)->ratio(1 / 1)
-            ],
-            'images.background' =>  [
-                'required',
-                'image',
-                Rule::dimensions()->maxHeight(1900)->maxWidth(1900)->ratio(1 / 1)
-            ],
-            'attrs.*.id' => 'nullable',
-            'attrs.*.value' => 'nullable',
-        ])->validate();
+        $validated = $request->validated();
 
         try {
             DB::beginTransaction();
 
             $product = Product::create([
-                'name' => $validator['name'],
-                'description' => $validator['description'],
+                'name' => $validated['name'],
+                'description' => $validated['description'],
                 'is_active' => true,
             ]);
 
-            foreach ($validator['attrs'] as $attr) {
+            foreach ($validated['attrs'] as $attr) {
                 $product->productAttributes()->create([
                     'attribute_id' => $attr['id'],
                     'value' => $attr['value']
                 ]);
             }
 
-
             foreach (ProductImage::getImageType() as $type) {
-                $file = $request->file("images.{$type}");
+                $file = $validated->file($type);
                 $ext = $file->getClientOriginalExtension();
                 $fileName = "{$type}-{$product->id}.{$ext}";
 
                 $file->storeAs('public/uploads', $fileName);
 
                 $product->productImages()->create([
-                    'title' => $validator['name'],
+                    'title' => $validated['name'],
                     'url' => "uploads/{$fileName}",
                     'type' => $type,
                 ]);
             }
 
             DB::commit();
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             DB::rollBack();
 
-            return redirect()->back()->with('failed', 'Error occured! ' . $th->getMessage());
+            return redirect()
+                ->back()
+                ->with('failed', 'Error occured! ' . $e->getMessage());
         }
 
         return redirect()
@@ -138,10 +122,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-
         return Inertia::render('Product/Edit', [
-            'product' => Product::with(['attributes'])->where('id', $id)->get()->first(),
-            'properties' => Attribute::all(),
+            'product' => Product::with(['attributes', 'thumbnail', 'cover'])->where('id', $id)->first(),
         ]);
     }
 
@@ -152,9 +134,26 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        try {
+            $product = Product::where('id', $id)->update([
+                'name' => $validated['name'],
+                'description' => $validated['description'],
+                'is_active' => $validated['is_active'] == 'true' ? true : false,
+            ]);
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with('failed', 'Error occured! ' . $e->getMessage());;
+        }
+
+
+        return redirect()
+            ->route('products.index')
+            ->with('success', 'Product updated!');
     }
 
     /**

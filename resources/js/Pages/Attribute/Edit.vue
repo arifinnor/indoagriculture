@@ -10,7 +10,7 @@ import { Inertia } from '@inertiajs/inertia';
 const { attribute } = useAttrs();
 const form = useForm(attribute);
 const update = () => {
-  form.put(`/attributes/${form.id}`);
+  form.put(route('attributes.update', form.id));
 };
 const destroy = () => {
   Inertia.delete(`/attributes/${attribute.id}`);
@@ -43,21 +43,23 @@ const destroy = () => {
                 <BreezeValidationErrors class="mt-1" />
               </div>
               <div class="flex flex-wrap justify-between mt-4">
-                <div class="flex flex-wrap gap-2">
-                  <BreezeButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <div class="flex gap-4">
+                  <button type="submit" class="btn btn-primary" :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing">
                     <vue-feather type="save"></vue-feather>
-                    <span class="px-2">Update property</span>
-                  </BreezeButton>
-                  <!-- <Link :href="route('attributes.index')" class="btn btn-sm btn-ghost">
+                    <span class="px-2">Update</span>
+                  </button>
+
+                  <Link :href="route('attributes.index')" class="btn btn-error btn-outline gap-1">
                   <vue-feather type="rotate-ccw"></vue-feather>
-                  <span class="px-2">Back to previous page</span>
-                  </Link> -->
+                  <span>Cancel</span>
+                  </Link>
+
                 </div>
-                <div>
-                  <label for="modal-confirm" class="btn btn-link btn-error text-error modal-button">
-                    Delete property
-                  </label>
-                </div>
+                <label for="modal-confirm" class="btn btn-error modal-button gap-1">
+                  <vue-feather type="trash-2"></vue-feather>
+                  <span>Delete</span>
+                </label>
               </div>
             </form>
           </div>

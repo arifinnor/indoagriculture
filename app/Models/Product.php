@@ -44,4 +44,9 @@ class Product extends Model
     {
         return $this->hasOne(ProductImage::class)->where('type', 'thumbnail');
     }
+
+    public function cover(): HasOne
+    {
+        return $this->hasOne(ProductImage::class)->where('type', 'background');
+    }
 }

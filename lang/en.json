@@ -1,7 +1,12 @@
 {
-    "The :attribute must contain at least one letter.": "The :attribute must contain at least one letter.",
-    "The :attribute must contain at least one number.": "The :attribute must contain at least one number.",
-    "The :attribute must contain at least one symbol.": "The :attribute must contain at least one symbol.",
-    "The :attribute must contain at least one uppercase and one lowercase letter.": "The :attribute must contain at least one uppercase and one lowercase letter.",
-    "The given :attribute has appeared in a data leak. Please choose a different :attribute.": "The given :attribute has appeared in a data leak. Please choose a different :attribute."
+    "Home": "Home",
+    "Our Products": "Our Products",
+    "Contact Us": "Contact Us",
+
+    "Our Vision": "Our Vision",
+    "Providing fresh and high quality of Indonesian agricultural products.": "Providing fresh and high quality of Indonesian agricultural products.",
+
+    "Our Mission": "Our Mission",
+    "To realize our vision we are committed to support Indonesian farmer to improve their well-being and quality of life through providing education and training." : "To realize our vision we are committed to support Indonesian farmer to improve their well-being and quality of life through providing education and training."
+    
 }

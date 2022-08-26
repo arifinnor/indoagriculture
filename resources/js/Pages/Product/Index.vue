@@ -57,8 +57,8 @@ watch(
         <!-- End success alert -->
 
         <div class="flex justify-between mb-3">
-          <Link :href="route('products.create')" class="btn btn-accent text-white">
-          <vue-feather type="plus"></vue-feather>
+          <Link :href="route('products.create')" class="btn btn-primary flex gap-2">
+          <vue-feather type="plus-circle"></vue-feather>
           <span>Create Product</span>
           </Link>
 
@@ -84,35 +84,37 @@ watch(
                     <thead>
                       <tr>
                         <th width="10%">#</th>
-                        <th>Name</th>
-                        <th>Status</th>
+                        <th width="40%" align="center">Name</th>
+                        <th width="20%" align="center">Status</th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="(product, index) in products.data" :key="product.id" class="hover">
-                        <td>
+                        <td align="center">
                           <Link class="flex items-center py-2 btn-link text-neutral"
                             :href="`/products/${product.id}/edit`">
-                          {{ index + 1 }}
+                          {{ index + 1 }}.
                           </Link>
                         </td>
                         <td>
                           <Link class="btn-link flex text-neutral items-center py-2"
                             :href="`/products/${product.id}/edit`">
-                          {{ product.name }}
+                          <span>{{ product.name }}</span>
                           </Link>
                         </td>
-                        <td>
-                          <div class="badge"
+                        <td align="center">
+                          <div class="badge flex gap-1 py-3"
                             :class="{ 'badge-success': product.is_active, 'badge-error': !product.is_active }">
-                            <vue-feather type="check" size="14"></vue-feather>
-                            {{ product.is_active ? 'Active' : 'Inactive' }}
+                            <vue-feather type="check-circle" size="14" stroke="white" stroke-width="2"></vue-feather>
+                            <span class="font-bold text-white">
+                              {{ product.is_active ? 'Active' : 'Inactive' }}
+                            </span>
                           </div>
                         </td>
                         <td>
-                          <Link class="flex items-center py-2 btn-link text-neutral"
-                            :href="`/products/${product.id}/summary`">
+                          <Link class="flex gap-2 btn btn-link" :href="`/products/${product.id}/summary`">
+                          <vue-feather type="link" size="14"></vue-feather>
                           Summary
                           </Link>
                         </td>

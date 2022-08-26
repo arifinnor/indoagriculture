@@ -14,11 +14,11 @@ class ProductSummaryController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Product $product)
+    public function __invoke(Product $product, $locale = 'en')
     {
-
         return Inertia::render('Product/Show', [
             'product' => Product::with(['attributes', 'productImages'])->where('id', $product->id)->get()->first(),
+            'locale' => $locale
 
         ]);
     }
