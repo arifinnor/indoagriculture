@@ -15,7 +15,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/{locale?}', \App\Http\Controllers\WelcomePageController::class)->name('home');
+Route::get('/', \App\Http\Controllers\WelcomePageController::class)->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
@@ -27,6 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::get('/products/{product}/summary/{locale?}', \App\Http\Controllers\ProductSummaryController::class)->name('summary');
+Route::get('/language/{locale}', [\App\Http\Controllers\LanguageController::class, 'change'])->name('lang');
 
 
 

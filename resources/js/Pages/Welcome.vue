@@ -80,7 +80,9 @@ function localized(lang = 'en') {
 
   lang == 'en' ? product.value = 'Our Product' : product.value = 'Unseres Produkt';
   lang == 'en' ? contact.value = 'Contact Us' : contact.value = 'Kontakt Uns';
+}
 
+function changeLang(url) {
 
 }
 
@@ -115,10 +117,10 @@ const thumbnails = computed(() => {
           </li>
         </ul>
       </div>
-      <a href="#home" class="hidden md:inline-flex btn btn-ghost normal-case text-xl text-neutral-content">
+      <a href="/" class="hidden md:inline-flex btn btn-ghost normal-case text-xl text-neutral-content">
         <span>Indo Tropical Agriculture</span>
       </a>
-      <a href="#home" class="md:hidden btn btn-ghost normal-case text-xl text-neutral-content">IAT</a>
+      <a href="/" class="md:hidden btn btn-ghost normal-case text-xl text-neutral-content">IAT</a>
     </div>
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal p-0">
@@ -132,7 +134,7 @@ const thumbnails = computed(() => {
         <label tabindex="0" class="btn btn-outlined btn-outlined m-1">{{ lang }}</label>
         <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
           <li>
-            <a href="/en">
+            <a :href="route('lang', 'en')">
               <svg class="mr-2 w-5 h-5 rounded-full" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 3900 3900">
                 <path fill="#b22234" d="M0 0h7410v3900H0z" />
@@ -164,14 +166,13 @@ const thumbnails = computed(() => {
           </li>
 
           <li>
-            <a href="/de">
+            <a :href="route('lang', 'de')">
               <svg class="h-3.5 w-3.5 rounded-full mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 id="flag-icon-css-de" viewBox="0 0 512 512">
                 <path fill="#ffce00" d="M0 341.3h512V512H0z" />
                 <path d="M0 0h512v170.7H0z" />
                 <path fill="#d00" d="M0 170.7h512v170.6H0z" />
               </svg>
-
               DE
             </a>
           </li>

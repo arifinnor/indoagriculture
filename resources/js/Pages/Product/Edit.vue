@@ -2,7 +2,6 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeInput from "@/Components/Input.vue";
 import BreezeLabel from "@/Components/Label.vue";
-import BreezeButton from "@/Components/Button.vue";
 import FileInput from "@/Components/FileInput.vue";
 import VueFeather from "vue-feather";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
@@ -91,7 +90,7 @@ const update = () => {
                 <BreezeInput v-model="form.name" type="text" class="input input-bordered w-full" placeholder="Type here"
                   required />
                 <div class="mt-1 font-medium text-red-600" v-if="form.errors.name">
-                  {{ form.errors.name }}
+                  {{  form.errors.name  }}
                 </div>
               </div>
               <div class="form-control mt-3">
@@ -113,13 +112,13 @@ const update = () => {
               <div class="form-control mt-3">
                 <FileInput v-model="thumbnailUrl" :type="type.thumbnail" id="thumbnail" />
                 <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                  {{ form.progress.percentage }}%
+                  {{  form.progress.percentage  }}%
                 </progress>
               </div>
               <div class="form-control mt-3">
                 <FileInput v-model="coverUrl" :type="type.background" id="background" />
                 <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                  {{ form.progress.percentage }}%
+                  {{  form.progress.percentage  }}%
                 </progress>
               </div>
               <div class="flex items-center justify-end mt-4">

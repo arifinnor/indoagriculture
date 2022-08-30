@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\Attribute;
 use App\Models\Product;
+use App\Models\ProductAttribute;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -139,11 +140,17 @@ class ProductController extends Controller
         $validated = $request->validated();
 
         try {
-            $product = Product::where('id', $id)->update([
+            Product::where('id', $id)->update([
                 'name' => $validated['name'],
                 'description' => $validated['description'],
                 'is_active' => $validated['is_active'] == 'true' ? true : false,
             ]);
+
+            foreach ($validated['attrs'] as $attr) {
+                ProductAttribute::where('product_id', $id)->where('attribute_id', $attr['id'])->update([
+                    'value' => $attr['value']
+                ]);
+            }
         } catch (\Exception $e) {
             return redirect()
                 ->back()
