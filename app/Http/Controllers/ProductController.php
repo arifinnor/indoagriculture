@@ -74,14 +74,14 @@ class ProductController extends Controller
             }
 
             foreach (ProductImage::getImageType() as $type) {
-                $file = $validated->file($type);
+                $file = $request->file($type);
                 $ext = $file->getClientOriginalExtension();
                 $fileName = "{$type}-{$product->id}.{$ext}";
 
                 $file->storeAs('public/uploads', $fileName);
 
                 $product->productImages()->create([
-                    'title' => $validated['name'],
+                    'title' => str_replace(' ', '-', strtolower($validated['name'])) . '-' . $product->id . '-' . $type,
                     'url' => "uploads/{$fileName}",
                     'type' => $type,
                 ]);
@@ -123,8 +123,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        // dd(Product::with(['attributes', 'thumbnail', 'cover'])->findOrFail($id));
+
         return Inertia::render('Product/Edit', [
-            'product' => Product::with(['attributes', 'thumbnail', 'cover'])->where('id', $id)->first(),
+            'product' => Product::with(['attributes', 'thumbnail', 'cover'])->findOrFail($id),
         ]);
     }
 
@@ -143,7 +145,7 @@ class ProductController extends Controller
             Product::where('id', $id)->update([
                 'name' => $validated['name'],
                 'description' => $validated['description'],
-                'is_active' => $validated['is_active'] == 'true' ? true : false,
+                'is_active' => (bool) $validated['is_active'],
             ]);
 
             foreach ($validated['attrs'] as $attr) {
@@ -151,12 +153,41 @@ class ProductController extends Controller
                     'value' => $attr['value']
                 ]);
             }
+
+            if ($request->file('thumbnail')) {
+                $file = $request->file('thumbnail');
+                $ext = $file->getClientOriginalExtension();
+                $fileName = "thumbnail-{$id}.{$ext}";
+
+                // dd($fileName);
+
+                $file->storeAs('public/uploads', $fileName);
+
+                ProductImage::where('product_id', $id)->where('type', 'thumbnail')->update([
+                    'title' => str_replace(' ', '-', strtolower($validated['name'])) . '-' . $id . '-thumbnail',
+                    'url' => "uploads/{$fileName}",
+                    'type' => 'thumbnail',
+                ]);
+            }
+
+            if ($request->file('background')) {
+                $file = $request->file('background');
+                $ext = $file->getClientOriginalExtension();
+                $fileName = "background-{$id}.{$ext}";
+
+                $file->storeAs('public/uploads', $fileName);
+
+                ProductImage::where('product_id', $id)->where('type', 'background')->update([
+                    'title' => str_replace(' ', '-', strtolower($validated['name'])) . '-' . $id . '-background',
+                    'url' => "uploads/{$fileName}",
+                    'type' => 'background',
+                ]);
+            }
         } catch (\Exception $e) {
             return redirect()
                 ->back()
                 ->with('failed', 'Error occured! ' . $e->getMessage());;
         }
-
 
         return redirect()
             ->route('products.index')

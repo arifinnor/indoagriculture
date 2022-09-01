@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('product_images', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
-            $table->string('title')->nullable();
+            $table->string('title')->unique()->nullable();
             $table->text('url');
             $table->string('type');
             $table->timestamps();

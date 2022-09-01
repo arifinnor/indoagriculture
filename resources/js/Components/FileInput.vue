@@ -7,7 +7,7 @@ const emit = defineEmits(['update:modelValue']);
 const imageUrl = ref(props.modelValue);
 
 const previewImage = (e) => {
-  const file = e.target.files[0];
+  let file = e.target.files[0];
   imageUrl.value = URL.createObjectURL(file);
 
   emit('update:modelValue', file);
@@ -43,7 +43,7 @@ const removeImage = () => {
           <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
             <span class="font-semibold">Click to upload</span>
           </p>
-          <p class="text-xs text-gray-500 dark:text-gray-400">{{ type }}</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">{{  type  }}</p>
         </div>
         <input :id="id" type="file" accept="image/*" class="hidden" @input="previewImage" />
       </label>

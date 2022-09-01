@@ -5,7 +5,8 @@ import BreezeLabel from "@/Components/Label.vue";
 import FileInput from "@/Components/FileInput.vue";
 import VueFeather from "vue-feather";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
-import { computed, onMounted, ref } from 'vue';
+import { reactive, ref } from 'vue';
+import { Inertia } from '@inertiajs/inertia';
 
 
 const props = defineProps({
@@ -25,15 +26,12 @@ const type = {
   background: 'Cover photo (MAX. 1200x1200px)'
 }
 
-const thumbnailUrl = `/storage/${props.product.thumbnail.url}`;
-const coverUrl = `/storage/${props.product.cover.url}`;
-
-const form = useForm({
+let form = reactive({
   name: props.product.name,
   description: props.product.description,
   is_active: props.product.is_active,
-  thumbnail: thumbnailUrl,
-  background: coverUrl,
+  thumbnail: `/storage/${props.product.thumbnail.url}`,
+  background: `/storage/${props.product.cover.url}`,
   attrs: [],
 });
 
@@ -45,22 +43,18 @@ const update = () => {
     };
   });
 
-  form.put(route('products.update', props.product.id));
+  Inertia.post(route('products.update', props.product.id), {
+    _method: 'put',
+    name: form.name,
+    description: form.description,
+    is_active: form.is_active,
+    thumbnail: form.thumbnail,
+    background: form.background,
+    attrs: form.attrs
+
+  });
 
 }
-
-// async function createFile(url, name) {
-//   const response = await fetch(url);
-//   const data = await response.blob();
-//   const metadata = {
-//     type: 'image/jpeg'
-//   };
-//   const file = new File([data], name, metadata);
-//   // ... do something with the file or return it
-
-//   return file;
-// }
-
 
 </script>
 
@@ -84,19 +78,25 @@ const update = () => {
                   <option value="true">Yes, of course!</option>
                   <option value="false">No, I don't think so.</option>
                 </select>
+                <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.is_active">
+                  {{  $attrs.errors.is_active  }}
+                </div>
               </div>
               <div class="form-control mt-3">
                 <BreezeLabel value="What's your product name?" />
                 <BreezeInput v-model="form.name" type="text" class="input input-bordered w-full" placeholder="Type here"
                   required />
-                <div class="mt-1 font-medium text-red-600" v-if="form.errors.name">
-                  {{  form.errors.name  }}
+                <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.name">
+                  {{  $attrs.errors.name  }}
                 </div>
               </div>
               <div class="form-control mt-3">
                 <BreezeLabel value="How's your product?" />
                 <textarea v-model="form.description" class="textarea textarea-bordered w-full h-48"
                   placeholder="Type here"></textarea>
+                <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.description">
+                  {{  $attrs.errors.description  }}
+                </div>
               </div>
               <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-3">
                 <template v-for="(property, index) in props.product.attributes">
@@ -110,16 +110,17 @@ const update = () => {
                 </template>
               </div>
               <div class="form-control mt-3">
-                <FileInput v-model="thumbnailUrl" :type="type.thumbnail" id="thumbnail" />
-                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                  {{  form.progress.percentage  }}%
-                </progress>
+                <FileInput v-model="form.thumbnail" :type="type.thumbnail" id="thumbnail" />
+                <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.thumbnail">
+                  {{  $attrs.errors.thumbnail  }}
+                </div>
+
               </div>
               <div class="form-control mt-3">
-                <FileInput v-model="coverUrl" :type="type.background" id="background" />
-                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                  {{  form.progress.percentage  }}%
-                </progress>
+                <FileInput v-model="form.background" :type="type.background" id="background" />
+                <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.background">
+                  {{  $attrs.errors.background  }}
+                </div>
               </div>
               <div class="flex items-center justify-end mt-4">
                 <Link :href="route('products.index')" class="btn btn-error btn-outline gap-1">

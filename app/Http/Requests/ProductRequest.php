@@ -24,14 +24,34 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' =>  'required|string|min:3',
-            'description' => 'required|string',
-            'is_active' => 'sometimes',
-            'thumbnail' => 'required',
-            'background' =>  'required',
+            'description' => 'required',
+            'is_active' => 'sometimes|boolean',
+            'thumbnail' => [
+                'required'
+            ],
+            'background' =>  [
+                'required'
+            ],
             'attrs.*.id' => 'nullable',
             'attrs.*.value' => 'nullable',
         ];
+
+        if (!is_string($this->request->get('thumbnail'))) {
+            $rules['thumbnail'] = [
+                'image',
+                Rule::dimensions()->ratio(1 / 1)->maxHeight(1200)->maxWidth(1200)
+            ];
+        }
+
+        if (!is_string($this->request->get('background'))) {
+            $rules['background'] = [
+                'image',
+                Rule::dimensions()->ratio(1 / 1)->maxHeight(1200)->maxWidth(1200)
+            ];
+        }
+
+        return $rules;
     }
 }
