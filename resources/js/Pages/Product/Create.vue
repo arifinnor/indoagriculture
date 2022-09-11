@@ -2,7 +2,6 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeInput from "@/Components/Input.vue";
 import BreezeLabel from "@/Components/Label.vue";
-import BreezeButton from "@/Components/Button.vue";
 import FileInput from "@/Components/FileInput.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import VueFeather from "vue-feather";
@@ -26,8 +25,8 @@ const form = useForm({
 });
 
 const type = {
-  thumbnail: 'Thumbnail photo (MAX. 1200x1200px)',
-  background: 'Cover photo (MAX. 1200x1200px)'
+  thumbnail: 'Thumbnail photo (MAX. 1400x1400px)',
+  background: 'Cover photo (MAX. 2400x2400px)'
 }
 
 const submit = () => {
