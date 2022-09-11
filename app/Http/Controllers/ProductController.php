@@ -63,6 +63,8 @@ class ProductController extends Controller
             $product = Product::create([
                 'name' => $validated['name'],
                 'description' => $validated['description'],
+                'name_de' => $validated['name_de'],
+                'description_de' => $validated['description_de'],
                 'is_active' => true,
             ]);
 
@@ -145,6 +147,8 @@ class ProductController extends Controller
             Product::where('id', $id)->update([
                 'name' => $validated['name'],
                 'description' => $validated['description'],
+                'name_de' => $validated['name_de'],
+                'description_de' => $validated['description_de'],
                 'is_active' => (bool) $validated['is_active'],
             ]);
 

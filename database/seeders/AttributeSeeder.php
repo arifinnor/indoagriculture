@@ -16,6 +16,17 @@ class AttributeSeeder extends Seeder
      */
     public function run()
     {
-        Attribute::factory(11)->create();
+        // Attribute::factory(11)->create();
+
+        $attributes = [
+            'Grade', 'Origin', 'Size', 'Age', 'Container Capacity', 'Stems', 'Inferior Cloves',
+            'Admixture', 'Moisture', 'Skin Color', 'Flesh Color', 'Packaging',
+        ];
+
+        foreach ($attributes as $attr) {
+            Attribute::create([
+                'name' => $attr
+            ]);
+        }
     }
 }

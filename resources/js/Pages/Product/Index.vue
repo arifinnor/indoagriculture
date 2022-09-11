@@ -120,8 +120,8 @@ watch(
                         </td>
                       </tr>
                       <tr v-if="products.data.length === 0">
-                        <td class="px-6 py-4 border-t" colspan="2">
-                          No properties found.
+                        <td class="px-6 py-4 border-t text-center" colspan="4">
+                          No product found.
                         </td>
                       </tr>
                     </tbody>

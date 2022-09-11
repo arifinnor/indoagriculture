@@ -4,8 +4,8 @@ import BreezeInput from "@/Components/Input.vue";
 import BreezeLabel from "@/Components/Label.vue";
 import FileInput from "@/Components/FileInput.vue";
 import VueFeather from "vue-feather";
-import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
-import { reactive, ref } from 'vue';
+import { Head, Link } from "@inertiajs/inertia-vue3";
+import { reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 
 
@@ -14,6 +14,8 @@ const props = defineProps({
     id: Int32Array,
     name: String,
     description: String,
+    name_de: String,
+    description_de: String,
     is_active: Boolean,
     attributes: Array,
     thumbnail: Object,
@@ -22,13 +24,15 @@ const props = defineProps({
 });
 
 const type = {
-  thumbnail: 'Thumbnail photo (MAX. 1200x1200px)',
-  background: 'Cover photo (MAX. 1200x1200px)'
+  thumbnail: 'Thumbnail photo (MAX. 1400x1400px)',
+  background: 'Cover photo (MAX. 2400x2400px)'
 }
 
-let form = reactive({
+const form = reactive({
   name: props.product.name,
   description: props.product.description,
+  name_de: props.product.name_de,
+  description_de: props.product.description_de,
   is_active: props.product.is_active,
   thumbnail: `/storage/${props.product.thumbnail.url}`,
   background: `/storage/${props.product.cover.url}`,
@@ -47,10 +51,12 @@ const update = () => {
     _method: 'put',
     name: form.name,
     description: form.description,
+    name_de: form.name_de,
+    description_de: form.description_de,
     is_active: form.is_active,
     thumbnail: form.thumbnail,
     background: form.background,
-    attrs: form.attrs
+    attrs: form.attrs,
 
   });
 
@@ -74,30 +80,52 @@ const update = () => {
             <form @submit.prevent="update">
               <div class="form-control mt-3">
                 <BreezeLabel value="Is it still active?" />
-                <select v-model="form.is_active" class="select select-bordered w-full max-w-xs">
+                <select v-model="form.is_active" class="select select-bordered w-full max-w-[25%]">
                   <option value="true">Yes, of course!</option>
                   <option value="false">No, I don't think so.</option>
                 </select>
                 <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.is_active">
-                  {{  $attrs.errors.is_active  }}
+                  {{ $attrs.errors.is_active }}
                 </div>
               </div>
-              <div class="form-control mt-3">
-                <BreezeLabel value="What's your product name?" />
-                <BreezeInput v-model="form.name" type="text" class="input input-bordered w-full" placeholder="Type here"
-                  required />
-                <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.name">
-                  {{  $attrs.errors.name  }}
+              <div class="lg:flex lg:flex-row lg:gap-4">
+                <div class="mt-3 w-full lg:max-w-[50%]">
+                  <BreezeLabel value="What's your product's name?" />
+                  <BreezeInput v-model="form.name" type="text" class="input input-bordered w-full"
+                    placeholder="Type here" required />
+                  <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.name">
+                    {{ $attrs.errors.name }}
+                  </div>
+                </div>
+                <div class="mt-3 w-full lg:max-w-[50%]">
+                  <BreezeLabel value="Your product's name too, but in Germany." />
+                  <BreezeInput v-model="form.name_de" type="text" class="input input-bordered w-full bg-sky-50"
+                    placeholder="Type here" required />
+                  <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.name_de">
+                    {{ $attrs.errors.name_de }}
+                  </div>
                 </div>
               </div>
-              <div class="form-control mt-3">
-                <BreezeLabel value="How's your product?" />
-                <textarea v-model="form.description" class="textarea textarea-bordered w-full h-48"
-                  placeholder="Type here"></textarea>
-                <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.description">
-                  {{  $attrs.errors.description  }}
+              <div class="lg:flex lg:flex-row lg:gap-4">
+                <div class="mt-3 w-full lg:max-w-[50%]">
+                  <BreezeLabel value="How's your product?" />
+                  <textarea v-model="form.description" class="textarea textarea-bordered w-full h-48"
+                    placeholder="Type here"></textarea>
+                  <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.description">
+                    {{ $attrs.errors.description }}
+                  </div>
+                </div>
+                <div class="mt-3 w-full lg:max-w-[50%]">
+                  <BreezeLabel value="Your product's description, but in Germany." />
+                  <textarea v-model="form.description_de" class="textarea textarea-bordered w-full h-48 bg-sky-50"
+                    placeholder="Type here"></textarea>
+                  <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.description_de">
+                    {{ $attrs.errors.description_de }}
+                  </div>
                 </div>
               </div>
+
+
               <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-3">
                 <template v-for="(property, index) in props.product.attributes">
                   <div class="form-control">
@@ -112,14 +140,14 @@ const update = () => {
               <div class="form-control mt-3">
                 <FileInput v-model="form.thumbnail" :type="type.thumbnail" id="thumbnail" />
                 <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.thumbnail">
-                  {{  $attrs.errors.thumbnail  }}
+                  {{ $attrs.errors.thumbnail }}
                 </div>
 
               </div>
               <div class="form-control mt-3">
                 <FileInput v-model="form.background" :type="type.background" id="background" />
                 <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.background">
-                  {{  $attrs.errors.background  }}
+                  {{ $attrs.errors.background }}
                 </div>
               </div>
               <div class="flex items-center justify-end mt-4">

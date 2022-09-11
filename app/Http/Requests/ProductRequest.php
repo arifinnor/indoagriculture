@@ -25,8 +25,10 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name' =>  'required|string|min:3',
+            'name' =>  'required',
             'description' => 'required',
+            'name_de' =>  'required',
+            'description_de' => 'required',
             'is_active' => 'sometimes|boolean',
             'thumbnail' => [
                 'required'
@@ -41,17 +43,30 @@ class ProductRequest extends FormRequest
         if (!is_string($this->request->get('thumbnail'))) {
             $rules['thumbnail'] = [
                 'image',
-                Rule::dimensions()->ratio(1 / 1)->maxHeight(1200)->maxWidth(1200)
+                Rule::dimensions()->maxHeight(1400)->maxWidth(1400)
             ];
         }
 
         if (!is_string($this->request->get('background'))) {
             $rules['background'] = [
                 'image',
-                Rule::dimensions()->ratio(1 / 1)->maxHeight(1200)->maxWidth(1200)
+                Rule::dimensions()->maxHeight(2400)->maxWidth(2400)
             ];
         }
 
         return $rules;
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name_de.required' => 'The name field is required.',
+            'description_de.required' => 'The description field is required.',
+        ];
     }
 }
