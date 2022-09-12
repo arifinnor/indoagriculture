@@ -22,8 +22,6 @@ class WelcomePageController extends Controller
         $thumbnails = Product::with('thumbnail')->orderBy('id', 'desc')->take(4)->get();
 
         return Inertia::render('Welcome', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
             'product_images' => $thumbnails,
             'locale' => $locale,
         ]);

@@ -1,10 +1,8 @@
 <script setup>
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/inertia-vue3';
 import VueFeather from 'vue-feather';
 
-const props = defineProps(['product']);
-const title = props.product.name;
-const description = props.product.description
+const props = defineProps(['product', 'locale']);
 const images = props.product.product_images;
 const properties = props.product.attributes;
 const cover = images.find(item => {
@@ -20,25 +18,44 @@ const whatsappUs = () => { window.open('https://wa.me/6281331261210?text=Hello, 
 
 <template>
 
-  <Head :title="title" />
+  <Head :title="props.product.name" />
 
   <div class="container rounded outline-none mx-auto my-10 py-10">
-    <div class="flex flex-col lg:flex-row gap-4 sm:gap-12 justify-center items-center mx-4">
-
-      <div class=" w-1/2">
-        <img class="rounded-xl" :src="coverUrl" alt="cover-image">
+    <Link href="/" class="absolute btn btn-circle btn-outline flex justify-center items-center mx-8">
+    <vue-feather type="arrow-left"></vue-feather>
+    </Link>
+    <div class="flex flex-col lg:flex-row lg:gap-12 justify-center items-center mx-8">
+      <div class="w-full lg:w-1/2">
+        <img :src="coverUrl" alt="cover-image">
       </div>
 
-      <div class="w-1/2">
-        <h1 class="font-extrabold text-2xl text-center md:text-left md:text-3xl text-gray-900 mb-4"> {{  title  }}</h1>
-        <div class="my-6">
-          <p class="text-gray-700 text-xl md:text-2xl text-center md:text-left">{{  description  }}</p>
+      <div class="w-full lg:w-1/2">
+        <h1 v-if="props.locale === 'en'"
+          class="font-extrabold text-2xl text-center md:text-left md:text-3xl text-gray-900 mb-4">
+          {{ props.product.name }}
+        </h1>
+
+        <h1 v-if="props.locale === 'de'"
+          class="font-extrabold text-2xl text-center md:text-left text-l md:text-3xl text-gray-900 mb-4">
+          {{ props.product.name_de }}
+        </h1>
+
+        <div class="mb-6">
+          <p v-if="props.locale === 'en'" class="text-gray-700 md:text-2xl text-justify">
+            {{ props.product.description }}
+          </p>
+
+          <p v-if="props.locale === 'de'" class="text-gray-700 md:text-2xl text-justify">
+            {{ props.product.description_de }}
+          </p>
         </div>
 
         <div v-for="property in filteredProperties" class="flex flex-row gap-2 mb-4">
-          <div class="min-w-fit max-w-3xl w-52 text-sm md:text-base">{{  property.name  }}</div>
-          <div class="w-fit text-sm md:text-base">:</div>
-          <div class="min-w-fit w-full text-sm md:text-base">{{  property.pivot.value  }}</div>
+          <div class="min-w-fit max-w-3xl md:w-52 md:text-base">
+            {{ property.name }}
+          </div>
+          <div class="w-full max-w-fit">:</div>
+          <div class="min-w-fit w-full md:text-base">{{ property.pivot.value }}</div>
         </div>
 
         <div class="my-6 flex flex-col md:flex-row">

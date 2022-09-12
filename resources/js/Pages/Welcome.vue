@@ -1,11 +1,9 @@
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
-import { computed, onMounted, ref, resolveDirective } from "vue";
+import { onMounted, ref } from "vue";
 import VueFeather from 'vue-feather';
 
 const props = defineProps({
-  canLogin: Boolean,
-  canRegister: Boolean,
   product_images: Array,
   locale: String,
 });
@@ -73,7 +71,7 @@ function localizedMenus(lang = 'en') {
   return menus.filter(menu => menu.lang == lang);
 }
 
-function localized(lang = 'en') {
+function localize(lang = 'en') {
   hero.value = heroes.find(hero => hero.lang == lang);
   vision.value = visions.find(vision => vision.lang == lang);
   mission.value = missions.find(mission => mission.lang == lang);
@@ -83,7 +81,7 @@ function localized(lang = 'en') {
 }
 
 onMounted(() => {
-  localized(lang);
+  localize(lang);
 });
 
 
@@ -102,7 +100,7 @@ onMounted(() => {
         </label>
         <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
           <li v-for="menu in localizedMenus(lang)">
-            <a :href="menu.link" :class="{ active: menu.active }">{{  menu.name  }}</a>
+            <a :href="menu.link" :class="{ active: menu.active }">{{ menu.name }}</a>
           </li>
         </ul>
       </div>
@@ -114,13 +112,13 @@ onMounted(() => {
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal p-0">
         <li v-for="menu in localizedMenus(lang)" class="text-neutral-content">
-          <a :href="menu.link" :class="{ active: menu.isActive }" class="font-bold">{{  menu.name  }}</a>
+          <a :href="menu.link" :class="{ active: menu.isActive }" class="font-bold">{{ menu.name }}</a>
         </li>
       </ul>
     </div>
     <div class=" navbar-end">
       <div class="dropdown dropdown-end">
-        <label tabindex="0" class="btn btn-outlined btn-outlined m-1">{{  lang  }}</label>
+        <label tabindex="0" class="btn btn-outlined btn-outlined m-1">{{ lang }}</label>
         <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
           <li>
             <a :href="route('lang', 'en')">
@@ -178,13 +176,13 @@ onMounted(() => {
       <div class="hero-content text-center text-neutral-content">
         <div class="max-w">
           <h1 class="mb-5 text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl">
-            {{  hero.title  }}
+            {{ hero.title }}
           </h1>
           <p class="mb-5 text-base sm:text-2xl md:text-3xl lg:text-4xl">
-            {{  hero.body  }}
+            {{ hero.body }}
           </p>
           <a href="#our-products" class="btn btn-primary btn-wide text-neutral-content rounded-xl">
-            {{  hero.button  }}
+            {{ hero.button }}
           </a>
         </div>
       </div>
@@ -197,16 +195,16 @@ onMounted(() => {
     <div class="container mx-auto pb-16">
       <!-- Vision -->
       <div class="flex flex-col mx-4 md:mx-40 md:flex-row gap-4 md:gap-8 pt-8 md:pt-16 justify-center items-center">
-        <div class="w-full md:w-1/2 flex justify-end">
+        <div class="w-full md:w-1/2 flex justify-center">
           <img src="storage/vision.jpeg" alt="vision"
             class="w-64 h-64 lg:w-96 lg:h-96 rounded-full md:rounded-3xl shadow-2xl">
         </div>
         <div class="w-fit md:w-1/2">
           <h3 class="mb-2 md:mb-4 text-center md:text-left text-2xl lg:text-4xl text-slate-700 font-semibold">
-            {{  vision.title  }}
+            {{ vision.title }}
           </h3>
           <p class="text-center md:text-left text-slate-500 text-xl lg:text-2xl">
-            {{  vision.text  }}
+            {{ vision.text }}
           </p>
         </div>
       </div>
@@ -221,10 +219,10 @@ onMounted(() => {
         </div>
         <div class="md:w-1/2 md:hidden">
           <h3 class="mb-2 md:mb-4 text-center md:text-left text-2xl lg:text-4xl text-slate-700 font-semibold">
-            {{  mission.title  }}
+            {{ mission.title }}
           </h3>
           <p class="text-center md:text-left text-slate-500 text-xl lg:text-2xl">
-            {{  mission.text  }}
+            {{ mission.text }}
           </p>
         </div>
         <!-- End hidden when medium breakpoint -->
@@ -232,10 +230,10 @@ onMounted(() => {
         <!-- Hidden when mobile view -->
         <div class="md:w-1/2 hidden md:inline-block">
           <h3 class="mb-2 md:mb-4 text-center md:text-right text-2xl lg:text-4xl text-slate-700 font-semibold">
-            {{  mission.title  }}
+            {{ mission.title }}
           </h3>
           <p class="text-center md:text-right text-slate-500 text-xl lg:text-2xl">
-            {{  mission.text  }}
+            {{ mission.text }}
           </p>
         </div>
         <div class="md:w-1/2 hidden md:block">
@@ -254,17 +252,22 @@ onMounted(() => {
   <!-- Our products -->
   <section class="max-h-full w-full bg-slate-200" id="our-products">
     <div class="container mx-auto pb-16">
-      <h1 class="text-5xl text-slate-700 text-center font-bold py-16">{{  product  }}</h1>
+      <h1 class="text-5xl text-slate-700 text-center font-bold py-16">{{ product }}</h1>
       <div class="flex flex-wrap gap-4 justify-center items-center h-fit">
-        <template v-for="image in images">
+        <template v-for="image in images" :key="image.id">
           <div class="w-72 h-72 bg-base-100 relative shadow-xl rounded-full">
             <div class="absolute inset-0 bg-cover bg-center z-0 rounded-full hover:opacity-0"
               :style="`background-image: url(${image.thumbnail.url})`">
             </div>
             <a :href="route('summary', image.thumbnail.product_id)">
-              <span
-                class="opacity-0 hover:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-2xl text-neutral-focus font-semibold">
-                {{  image.name  }}
+              <span v-if="lang === 'en'"
+                class="opacity-0 hover:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-2xl text-neutral-content font-semibold">
+                {{ image.name }}
+              </span>
+
+              <span v-if="lang === 'de'"
+                class="opacity-0 hover:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-2xl text-neutral-content font-semibold">
+                {{ image.name_de }}
               </span>
             </a>
           </div>
@@ -277,7 +280,7 @@ onMounted(() => {
   <!-- Contact us -->
   <section class="min-h-screen w-full bg-green-700 bg-cover bg-right lg:bg-left lg:bg-contain"
     style="background-image: url('/storage/contact-us.png')" id="contact-us">
-    <h1 class="text-5xl text-center text-slate-200 font-bold py-12">{{  contact  }}</h1>
+    <h1 class="text-5xl text-center text-slate-200 font-bold py-12">{{ contact }}</h1>
     <div class="flex justify-center items-center lg:grid lg:grid-cols-2">
       <div class="hidden lg:block"></div>
       <div>
