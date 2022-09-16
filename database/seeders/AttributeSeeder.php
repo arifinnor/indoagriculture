@@ -18,15 +18,112 @@ class AttributeSeeder extends Seeder
     {
         // Attribute::factory(11)->create();
 
+//        $attributes = [
+//            'Grade', 'Origin', 'Size', 'Age', 'Container Capacity', 'Stems', 'Inferior Cloves',
+//            'Admixture', 'Moisture', 'Skin Color', 'Flesh Color', 'Packaging',
+//        ];
+
         $attributes = [
-            'Grade', 'Origin', 'Size', 'Age', 'Container Capacity', 'Stems', 'Inferior Cloves',
-            'Admixture', 'Moisture', 'Skin Color', 'Flesh Color', 'Packaging',
+            [
+                'name' => 'Grade',
+                'language' => 'en'
+            ],
+            [
+                'name' => 'Origin',
+                'language' =>'en'
+            ],
+            [
+                'name' => 'Size',
+                'language' => 'en'
+            ],
+            [
+                'name' => 'Age',
+                'language' => 'en'
+            ],
+            [
+                'name' => 'Container Capacity',
+                'language' => 'en'
+            ],
+            [
+                'name' => 'Stems',
+                'language' => 'en'
+            ],
+            [
+                'name' => 'Inferior Cloves',
+                'language' => 'en'
+            ],
+            [
+                'name' => 'Admixture',
+                'language' => 'en'
+            ],
+            [
+                'name' => 'Moisture',
+                'language' => 'en'
+            ],
+            [
+                'name' => 'Skin Color',
+                'language' => 'en'
+            ],
+            [
+                'name' => 'Flesh Color',
+                'language' => 'en'
+            ],
+            [
+                'name' => 'Packaging',
+                'language' => 'en'
+            ],
+            [
+                'name' => 'Grade',
+                'language' => 'de'
+            ],
+            [
+                'name' => 'Herkunft',
+                'language' => 'de'
+            ],
+            [
+                'name' => 'Größe',
+                'language' => 'de'
+            ],
+            [
+                'name' => 'Alter',
+                'language' => 'de'
+            ],
+            [
+                'name' => 'Containerkapazität',
+                'language' => 'de'
+            ],
+            [
+                'name' => 'Stämme',
+                'language' => 'de'],
+            [
+                'name' => 'Inferiore Gewürznelken',
+                'language' => 'de'
+            ],
+            [
+                'name' => 'Beimischung',
+                'language' => 'de'
+            ],
+            [
+                'name' => 'Feuchtigkeit',
+                'language' => 'de'
+            ],
+            [
+                'name' => 'Hautfarbe',
+                'language' => 'de'
+            ],
+            [
+                'name' => 'Fleischfarbe',
+                'language' => 'de'
+            ],
+            [
+                'name' => 'Verpackung',
+                'language' => 'de'
+            ],
+
         ];
 
         foreach ($attributes as $attr) {
-            Attribute::create([
-                'name' => $attr
-            ]);
+            Attribute::create($attr);
         }
     }
 }

@@ -127,11 +127,11 @@ const update = () => {
 
 
               <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-3">
-                <template v-for="(property, index) in props.product.attributes">
+                <template v-for="property in props.product.attributes">
                   <div class="form-control">
                     <BreezeLabel :for="property.name" :value="property.name" />
                     <BreezeInput v-model="property.pivot.value" type="text" :id="property.name"
-                      class="input input-bordered w-full" placeholder="empty" />
+                      class="input input-bordered w-full" :class="{'bg-sky-50': property.language === 'de'}" placeholder="empty" />
                     <BreezeInput v-model="property.id" type="hidden" class="input input-bordered w-full"
                       :placeholder="property.id" />
                   </div>

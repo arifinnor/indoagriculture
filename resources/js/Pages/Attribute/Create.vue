@@ -7,6 +7,7 @@ import VueFeather from "vue-feather";
 
 const form = useForm({
   name: null,
+  language: null,
 });
 
 const submit = () => {
@@ -37,7 +38,17 @@ const submit = () => {
                   <span class="label-text">What is your product properties name?</span>
                 </label>
                 <input v-model="form.name" type="text" placeholder="Type here" class="input input-bordered w-full" />
-                <BreezeValidationErrors class="mt-1" />
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">What language is it?</span>
+                </label>
+                <select v-model="form.language" class="select select-bordered w-full max-w-xs">
+                  <option disabled selected value="null">Select language</option>
+                  <option value="en">English</option>
+                  <option value="de">Deutch</option>
+                </select>
+                <BreezeValidationErrors class="mt-4" />
               </div>
               <div class="flex gap-4 mt-4">
                 <button type="submit" class="btn btn-primary" :class="{ 'opacity-25': form.processing }"

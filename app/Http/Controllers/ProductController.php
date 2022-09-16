@@ -16,9 +16,10 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Inertia\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): \Inertia\Response
     {
         $rows = $request->rows ?? 10;
 
@@ -38,9 +39,9 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
-    public function create()
+    public function create(): \Inertia\Response
     {
         return Inertia::render('Product/Create', [
             'product_attributes' => Attribute::all()
@@ -51,9 +52,9 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(ProductRequest $request)
+    public function store(ProductRequest $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validated();
 
@@ -106,10 +107,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Inertia\Response
      */
-    public function show($id)
+    public function show(int $id): \Inertia\Response
     {
         return Inertia::render('Product/Show', [
             'product' => Product::with(['attributes'])->where('id', $id)->get()->first(),
@@ -120,10 +121,10 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Inertia\Response
      */
-    public function edit($id)
+    public function edit(int $id): \Inertia\Response
     {
         // dd(Product::with(['attributes', 'thumbnail', 'cover'])->findOrFail($id));
 
@@ -135,11 +136,11 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ProductRequest $request, $id)
+    public function update(ProductRequest $request, int $id): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validated();
 
@@ -190,7 +191,7 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return redirect()
                 ->back()
-                ->with('failed', 'Error occured! ' . $e->getMessage());;
+                ->with('failed', 'Error occured! ' . $e->getMessage());
         }
 
         return redirect()
@@ -201,10 +202,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): \Illuminate\Http\Response
     {
         //
     }

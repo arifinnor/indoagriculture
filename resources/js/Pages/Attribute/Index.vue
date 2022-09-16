@@ -83,8 +83,9 @@ watch(
                     <!-- head -->
                     <thead>
                       <tr>
-                        <th width="10%">#</th>
+                        <th class="w-[7%]">#</th>
                         <th>Name</th>
+                        <th>Language</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -99,6 +100,12 @@ watch(
                           <Link class="btn-link flex text-neutral items-center py-2"
                             :href="`/attributes/${attribute.id}/edit`">
                           {{ attribute.name }}
+                          </Link>
+                        </td>
+                        <td>
+                          <Link class="btn-link flex text-neutral items-center py-2"
+                                :href="`/attributes/${attribute.id}/edit`">
+                            {{ attribute.language }}
                           </Link>
                         </td>
                       </tr>

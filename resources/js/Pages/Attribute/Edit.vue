@@ -1,20 +1,28 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import BreezeButton from '@/Components/Button.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
-import { useAttrs } from 'vue';
 import VueFeather from 'vue-feather';
 import { Inertia } from '@inertiajs/inertia';
 
-const { attribute } = useAttrs();
-const form = useForm(attribute);
+const props = defineProps({
+  attribute: Object
+});
+
+const form = useForm({
+  'id': props.attribute.id,
+  'name': props.attribute.name,
+  'language': props.attribute.language
+});
+
 const update = () => {
   form.put(route('attributes.update', form.id));
 };
+
 const destroy = () => {
-  Inertia.delete(`/attributes/${attribute.id}`);
+  Inertia.delete(route('attributes.destroy', form.id));
 };
+
 </script>
 
 <template>
@@ -40,6 +48,16 @@ const destroy = () => {
                   <span class="label-text">What is your product properties name?</span>
                 </label>
                 <input v-model="form.name" type="text" placeholder="Type here" class="input input-bordered w-full" />
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">What language is it?</span>
+                </label>
+                <select v-model="form.language" class="select select-bordered w-full max-w-xs">
+                  <option disabled selected value="null">Select language</option>
+                  <option value="en">English</option>
+                  <option value="de">Deutch</option>
+                </select>
                 <BreezeValidationErrors class="mt-1" />
               </div>
               <div class="flex flex-wrap justify-between mt-4">

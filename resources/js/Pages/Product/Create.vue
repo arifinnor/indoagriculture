@@ -5,12 +5,13 @@ import BreezeLabel from "@/Components/Label.vue";
 import FileInput from "@/Components/FileInput.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import VueFeather from "vue-feather";
+import {computed} from "vue";
 
 const props = defineProps({
   product_attributes: Array
 });
 
-const initialAttributes = props.product_attributes?.map((item) => {
+const initialAttributes = props.product_attributes?.map(item => {
   return { ...item, value: "" };
 });
 
@@ -28,6 +29,10 @@ const type = {
   thumbnail: 'Thumbnail photo (MAX. 1400x1400px)',
   background: 'Cover photo (MAX. 2400x2400px)'
 }
+
+const classObject = computed(() => ({
+  'bg-sky-50': true
+}));
 
 const submit = () => {
   form.post(route('products.store'));
@@ -87,12 +92,12 @@ const submit = () => {
 
               </div>
               <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-3">
-                <template v-for="(attribute, index) in form.attrs">
+                <template v-for="(attribute) in form.attrs">
                   <div class="form-control">
                     <BreezeLabel for="attribute.name" :value="attribute.name" />
-                    <BreezeInput v-model="attribute.value" type="text" class="input input-bordered w-full"
+                    <BreezeInput v-model="attribute.value" type="text" class="input input-bordered w-full" :class="{ 'bg-sky-50': attribute.language === 'de' }"
                       :placeholder="attribute.name" />
-                    <BreezeInput v-model="attribute.id" type="text" class="hidden"></BreezeInput>
+                    <BreezeInput v-model="attribute.id" type="hidden"></BreezeInput>
                   </div>
                 </template>
               </div>

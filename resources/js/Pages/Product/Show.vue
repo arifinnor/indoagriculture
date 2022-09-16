@@ -1,17 +1,22 @@
 <script setup>
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import VueFeather from 'vue-feather';
+import { computed } from "vue";
 
 const props = defineProps(['product', 'locale']);
 const images = props.product.product_images;
 const properties = props.product.attributes;
+
 const cover = images.find(item => {
   return item.type = 'background'
 });
+
 const coverUrl = `/storage/${cover.url}`;
+
 const filteredProperties = properties.filter(item => {
-  return item.pivot.value != null;
+  return item.pivot.value != null && item.language === props.locale;
 });
+
 const whatsappUs = () => { window.open('https://wa.me/6281331261210?text=Hello, Can you help me with my order?') }
 
 </script>
