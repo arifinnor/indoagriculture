@@ -9,6 +9,7 @@ use App\Models\ProductAttribute;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -81,11 +82,11 @@ class ProductController extends Controller
                 $ext = $file->getClientOriginalExtension();
                 $fileName = "{$type}-{$product->id}.{$ext}";
 
-                $file->storeAs('public/uploads', $fileName);
+                $path = $file->storeAs('uploads', $fileName);
 
                 $product->productImages()->create([
                     'title' => str_replace(' ', '-', strtolower($validated['name'])) . '-' . $product->id . '-' . $type,
-                    'url' => "uploads/{$fileName}",
+                    'url' => '/storage/' . $path,
                     'type' => $type,
                 ]);
             }
@@ -159,18 +160,17 @@ class ProductController extends Controller
                 ]);
             }
 
+
             if ($request->file('thumbnail')) {
                 $file = $request->file('thumbnail');
                 $ext = $file->getClientOriginalExtension();
                 $fileName = "thumbnail-{$id}.{$ext}";
 
-                // dd($fileName);
-
-                $file->storeAs('public/uploads', $fileName);
+                $path = $file->storeAs('uploads', $fileName);
 
                 ProductImage::where('product_id', $id)->where('type', 'thumbnail')->update([
                     'title' => str_replace(' ', '-', strtolower($validated['name'])) . '-' . $id . '-thumbnail',
-                    'url' => "uploads/{$fileName}",
+                    'url' => '/storage/' . $path,
                     'type' => 'thumbnail',
                 ]);
             }
@@ -180,11 +180,11 @@ class ProductController extends Controller
                 $ext = $file->getClientOriginalExtension();
                 $fileName = "background-{$id}.{$ext}";
 
-                $file->storeAs('public/uploads', $fileName);
+                $path = $file->storeAs('uploads', $fileName);
 
                 ProductImage::where('product_id', $id)->where('type', 'background')->update([
                     'title' => str_replace(' ', '-', strtolower($validated['name'])) . '-' . $id . '-background',
-                    'url' => "uploads/{$fileName}",
+                    'url' => '/storage/' . $path,
                     'type' => 'background',
                 ]);
             }
@@ -203,9 +203,8 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id): \Illuminate\Http\Response
+    public function destroy(int $id)
     {
         //
     }
