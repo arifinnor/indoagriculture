@@ -23,7 +23,7 @@ const whatsappUs = () => { window.open('https://wa.me/6281331261210?text=Hello, 
   <Head :title="props.product.name" />
 
   <div class="container rounded outline-none mx-auto my-10 py-10">
-    <Link href="/" class="absolute btn btn-circle btn-outline flex justify-center items-center mx-8">
+    <Link href="/#our-products" class="absolute btn btn-circle btn-outline flex justify-center items-center mx-8">
     <vue-feather type="arrow-left"></vue-feather>
     </Link>
     <div class="flex flex-col lg:flex-row lg:gap-12 justify-center items-center mx-8">

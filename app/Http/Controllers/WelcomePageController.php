@@ -19,7 +19,7 @@ class WelcomePageController extends Controller
     public function __invoke(Request $request)
     {
         $locale = App::currentLocale();
-        $thumbnails = Product::with('thumbnail')->orderBy('id', 'desc')->take(4)->get();
+        $thumbnails = Product::with('thumbnail')->where('is_active',1)->orderBy('id', 'desc')->take(4)->get();
 
         return Inertia::render('Welcome', [
             'product_images' => $thumbnails,

@@ -34,8 +34,8 @@ const form = reactive({
   name_de: props.product.name_de,
   description_de: props.product.description_de,
   is_active: props.product.is_active,
-  thumbnail: `/storage/${props.product.thumbnail.url}`,
-  background: `/storage/${props.product.cover.url}`,
+  thumbnail: props.product.thumbnail.url,
+  background: props.product.cover.url,
   attrs: [],
 });
 

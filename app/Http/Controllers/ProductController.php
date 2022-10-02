@@ -151,7 +151,7 @@ class ProductController extends Controller
                 'description' => $validated['description'],
                 'name_de' => $validated['name_de'],
                 'description_de' => $validated['description_de'],
-                'is_active' => (bool) $validated['is_active'],
+                'is_active' => $validated['is_active'] == 'true',
             ]);
 
             foreach ($validated['attrs'] as $attr) {

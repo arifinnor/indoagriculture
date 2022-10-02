@@ -29,7 +29,7 @@ class ProductRequest extends FormRequest
             'description' => 'required',
             'name_de' =>  'required',
             'description_de' => 'required',
-            'is_active' => 'sometimes|boolean',
+            'is_active' => 'sometimes',
             'thumbnail' => [
                 'required'
             ],
