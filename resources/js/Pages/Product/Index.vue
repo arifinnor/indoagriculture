@@ -30,7 +30,6 @@ watch(
 </script>
 
 <template>
-
   <Head title="Product" />
 
   <BreezeAuthenticatedLayout>
@@ -85,6 +84,7 @@ watch(
                       <tr>
                         <th width="10%">#</th>
                         <th width="40%" align="center">Name</th>
+                        <th width="30%" align="center">Category</th>
                         <th width="20%" align="center">Status</th>
                         <th></th>
                       </tr>
@@ -101,6 +101,12 @@ watch(
                           <Link class="btn-link flex text-neutral items-center py-2"
                             :href="`/products/${product.id}/edit`">
                           <span>{{ product.name }}</span>
+                          </Link>
+                        </td>
+                        <td>
+                          <Link class="btn-link flex text-neutral items-center py-2"
+                            :href="`/products/${product.id}/edit`">
+                          <span>{{ product.category }}</span>
                           </Link>
                         </td>
                         <td align="center">

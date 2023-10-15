@@ -13,6 +13,7 @@ const props = defineProps({
   product: {
     id: Int32Array,
     name: String,
+    category: String,
     description: String,
     name_de: String,
     description_de: String,
@@ -20,7 +21,8 @@ const props = defineProps({
     attributes: Array,
     thumbnail: Object,
     cover: Object,
-  }
+  },
+  categories: Array
 });
 
 const type = {
@@ -31,6 +33,7 @@ const type = {
 const form = reactive({
   name: props.product.name,
   description: props.product.description,
+  category: props.product.category,
   name_de: props.product.name_de,
   description_de: props.product.description_de,
   is_active: props.product.is_active,
@@ -50,6 +53,7 @@ const update = () => {
   Inertia.post(route('products.update', props.product.id), {
     _method: 'put',
     name: form.name,
+    category: form.category,
     description: form.description,
     name_de: form.name_de,
     description_de: form.description_de,
@@ -65,7 +69,6 @@ const update = () => {
 </script>
 
 <template>
-
   <Head title="Product" />
 
   <BreezeAuthenticatedLayout>
@@ -91,8 +94,8 @@ const update = () => {
               <div class="lg:flex lg:flex-row lg:gap-4">
                 <div class="mt-3 w-full lg:max-w-[50%]">
                   <BreezeLabel value="What's your product's name?" />
-                  <BreezeInput v-model="form.name" type="text" class="input input-bordered w-full"
-                    placeholder="Type here" required />
+                  <BreezeInput v-model="form.name" type="text" class="input input-bordered w-full" placeholder="Type here"
+                    required />
                   <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.name">
                     {{ $attrs.errors.name }}
                   </div>
@@ -103,6 +106,18 @@ const update = () => {
                     placeholder="Type here" required />
                   <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.name_de">
                     {{ $attrs.errors.name_de }}
+                  </div>
+                </div>
+              </div>
+              <div class="lg:flex lg:flex-row lg:gap-4">
+                <div class="mt-3 w-full">
+                  <BreezeLabel value="Which category?" />
+                  <select v-model="form.category" class="select select-bordered w-full">
+                    <option value="" disabled selected>Please select one</option>
+                    <option v-for=" category in categories" :value="category.value">{{ category.name }}</option>
+                  </select>
+                  <div class="mt-1 font-medium text-red-600" v-if="$attrs.errors.category">
+                    {{ $attrs.errors.category }}
                   </div>
                 </div>
               </div>
@@ -131,7 +146,8 @@ const update = () => {
                   <div class="form-control">
                     <BreezeLabel :for="property.name" :value="property.name" />
                     <BreezeInput v-model="property.pivot.value" type="text" :id="property.name"
-                      class="input input-bordered w-full" :class="{'bg-sky-50': property.language === 'de'}" placeholder="empty" />
+                      class="input input-bordered w-full" :class="{ 'bg-sky-50': property.language === 'de' }"
+                      placeholder="empty" />
                     <BreezeInput v-model="property.id" type="hidden" class="input input-bordered w-full"
                       :placeholder="property.id" />
                   </div>

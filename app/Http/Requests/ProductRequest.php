@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Category;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class ProductRequest extends FormRequest
 {
@@ -26,6 +28,10 @@ class ProductRequest extends FormRequest
     {
         $rules = [
             'name' =>  'required',
+            'category' =>  [
+                'required',
+                Rule::in(Category::all())
+            ],
             'description' => 'required',
             'name_de' =>  'required',
             'description_de' => 'required',

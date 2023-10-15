@@ -5,10 +5,11 @@ import BreezeLabel from "@/Components/Label.vue";
 import FileInput from "@/Components/FileInput.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import VueFeather from "vue-feather";
-import {computed} from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
-  product_attributes: Array
+  product_attributes: Array,
+  categories: Array
 });
 
 const initialAttributes = props.product_attributes?.map(item => {
@@ -18,6 +19,7 @@ const initialAttributes = props.product_attributes?.map(item => {
 const form = useForm({
   name: null,
   name_de: null,
+  category: "",
   description: null,
   description_de: null,
   thumbnail: null,
@@ -40,7 +42,6 @@ const submit = () => {
 </script>
 
 <template>
-
   <Head title="Product" />
 
   <BreezeAuthenticatedLayout>
@@ -72,6 +73,18 @@ const submit = () => {
                 </div>
               </div>
               <div class="lg:flex lg:flex-row lg:gap-4">
+                <div class="mt-3 w-full">
+                  <BreezeLabel value="Which category?" />
+                  <select v-model="form.category" class="select select-bordered w-full">
+                    <option value="" disabled selected>Please select one</option>
+                    <option v-for=" category in categories" :value="category.value">{{ category.name }}</option>
+                  </select>
+                  <div class="mt-1 font-medium text-red-600" v-if="form.errors.category">
+                    {{ form.errors.category }}
+                  </div>
+                </div>
+              </div>
+              <div class="lg:flex lg:flex-row lg:gap-4">
                 <div class="mt-3 w-full lg:max-w-[50%]">
                   <BreezeLabel value="How's your product?" />
                   <textarea v-model="form.description" class="textarea textarea-bordered w-full h-48"
@@ -95,8 +108,8 @@ const submit = () => {
                 <template v-for="(attribute) in form.attrs">
                   <div class="form-control">
                     <BreezeLabel for="attribute.name" :value="attribute.name" />
-                    <BreezeInput v-model="attribute.value" type="text" class="input input-bordered w-full" :class="{ 'bg-sky-50': attribute.language === 'de' }"
-                      :placeholder="attribute.name" />
+                    <BreezeInput v-model="attribute.value" type="text" class="input input-bordered w-full"
+                      :class="{ 'bg-sky-50': attribute.language === 'de' }" :placeholder="attribute.name" />
                     <BreezeInput v-model="attribute.id" type="hidden"></BreezeInput>
                   </div>
                 </template>

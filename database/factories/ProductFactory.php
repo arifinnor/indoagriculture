@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,8 +19,11 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
+            'category' => Category::TROPICAL_FRUIT->value,
             'description' => $this->faker->paragraph(10),
-            'is_active' => $this->faker->randomElement([true, false]),
+            'name_de' => $this->faker->word,
+            'description_de' => $this->faker->paragraph(10),
+            'is_active' => true,
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Category;
 use App\Http\Requests\ProductRequest;
 use App\Models\Attribute;
 use App\Models\Product;
@@ -44,8 +45,18 @@ class ProductController extends Controller
      */
     public function create(): \Inertia\Response
     {
+        $categories = [];
+
+        foreach (Category::transform() as $key => $value) {
+            $categories[] = [
+                'name' => $value,
+                'value' => $key
+            ];
+        }
+
         return Inertia::render('Product/Create', [
-            'product_attributes' => Attribute::all()
+            'product_attributes' => Attribute::all(),
+            'categories' => $categories,
         ]);
     }
 
@@ -64,6 +75,7 @@ class ProductController extends Controller
 
             $product = Product::create([
                 'name' => $validated['name'],
+                'category' => $validated['category'],
                 'description' => $validated['description'],
                 'name_de' => $validated['name_de'],
                 'description_de' => $validated['description_de'],
@@ -86,7 +98,7 @@ class ProductController extends Controller
 
                 $product->productImages()->create([
                     'title' => str_replace(' ', '-', strtolower($validated['name'])) . '-' . $product->id . '-' . $type,
-                    'url' => '/storage/' . $path,
+                    'url' => '/storage/public/' . $path,
                     'type' => $type,
                 ]);
             }
@@ -115,7 +127,6 @@ class ProductController extends Controller
     {
         return Inertia::render('Product/Show', [
             'product' => Product::with(['attributes'])->where('id', $id)->get()->first(),
-
         ]);
     }
 
@@ -127,10 +138,18 @@ class ProductController extends Controller
      */
     public function edit(int $id): \Inertia\Response
     {
-        // dd(Product::with(['attributes', 'thumbnail', 'cover'])->findOrFail($id));
+        $categories = [];
 
+        foreach (Category::transform() as $key => $value) {
+            $categories[] = [
+                'name' => $value,
+                'value' => $key
+            ];
+        }
         return Inertia::render('Product/Edit', [
             'product' => Product::with(['attributes', 'thumbnail', 'cover'])->findOrFail($id),
+            'categories' => $categories,
+
         ]);
     }
 
@@ -148,6 +167,7 @@ class ProductController extends Controller
         try {
             Product::where('id', $id)->update([
                 'name' => $validated['name'],
+                'category' => $validated['category'],
                 'description' => $validated['description'],
                 'name_de' => $validated['name_de'],
                 'description_de' => $validated['description_de'],
@@ -160,7 +180,6 @@ class ProductController extends Controller
                 ]);
             }
 
-
             if ($request->file('thumbnail')) {
                 $file = $request->file('thumbnail');
                 $ext = $file->getClientOriginalExtension();
@@ -170,7 +189,7 @@ class ProductController extends Controller
 
                 ProductImage::where('product_id', $id)->where('type', 'thumbnail')->update([
                     'title' => str_replace(' ', '-', strtolower($validated['name'])) . '-' . $id . '-thumbnail',
-                    'url' => '/storage/' . $path,
+                    'url' => '/storage/public/' . $path,
                     'type' => 'thumbnail',
                 ]);
             }
@@ -184,7 +203,7 @@ class ProductController extends Controller
 
                 ProductImage::where('product_id', $id)->where('type', 'background')->update([
                     'title' => str_replace(' ', '-', strtolower($validated['name'])) . '-' . $id . '-background',
-                    'url' => '/storage/' . $path,
+                    'url' => '/storage/public/' . $path,
                     'type' => 'background',
                 ]);
             }

@@ -18,7 +18,6 @@ class ProductSeeder extends Seeder
     public function run()
     {
         Product::factory(5)->create();
-        $faker = \Faker\Factory::create();
 
         foreach (Product::cursor() as $product) {
             foreach (Attribute::cursor() as $attr) {
@@ -26,9 +25,10 @@ class ProductSeeder extends Seeder
             }
 
             foreach (ProductImage::getImageType() as $type) {
+                $word = fake()->word;
                 $product->productImages()->create([
-                    'title' => $faker->word,
-                    'url' => $faker->imageUrl,
+                    'title' => $word,
+                    'url' => fake()->imageUrl(width: 1000, height: 1000, word: $word),
                     'type' => $type,
                 ]);
             }

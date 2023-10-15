@@ -19,11 +19,10 @@ const images = props.product_images;
 const menus = [
   { name: 'Home', link: '#home', isActive: false, lang: 'en' },
   { name: 'Home', link: '#home', isActive: false, lang: 'de' },
-  { name: 'Our Products', link: '#our-products', isActive: false, lang: 'en' },
-  { name: 'Unseres Produkt', link: '#our-products', isActive: false, lang: 'de' },
+  { name: 'Our Products', link: '#', isActive: false, lang: 'en', child: ['Planting Media', 'Spices', 'Tropical Fruit'] },
+  { name: 'Unseres Produkt', link: '#', isActive: false, lang: 'de', child: ['Planting Media', 'Spices', 'Tropical Fruit'] },
   { name: 'Contact Us', link: '#contact-us', isActive: false, lang: 'en' },
   { name: 'Kontakt Uns', link: '#contact-us', isActive: false, lang: 'de' },
-
 ];
 
 const heroes = [
@@ -88,37 +87,61 @@ onMounted(() => {
 </script>
 
 <template>
-
   <Head title="Welcome" />
 
   <!-- navbar -->
-  <div class="navbar absolute z-10 bg-white bg-opacity-10">
+  <div class="navbar bg-base-200 sticky top-0 left-0 z-50 opacity-80 shadow-lg lg:shadow-2xl">
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost lg:hidden">
-          <VueFeather type="menu" stroke="white"></VueFeather>
+          <VueFeather type="menu" stroke="currentColor"></VueFeather>
         </label>
         <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
           <li v-for="menu in localizedMenus(lang)">
-            <a :href="menu.link" :class="{ active: menu.active }">{{ menu.name }}</a>
+            <template v-if="!menu.child">
+              <a :href="menu.link" :class="{ active: menu.isActive }">{{ menu.name }}</a>
+            </template>
+            <template v-else>
+              <span>
+                {{ menu.name }}
+                <svg v-if="menu.child" class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                  viewBox="0 0 24 24">
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                </svg>
+              </span>
+            </template>
+            <ul class="bg-base-100" v-if="menu.child">
+              <li v-for="submenu in menu.child">
+                <a href="#">{{ submenu }}</a>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
-      <a href="/" class="hidden md:inline-flex btn btn-ghost normal-case text-xl text-neutral-content">
+      <a href="/" class="hidden md:inline-flex btn btn-ghost normal-case text-xl text-neutral">
         <span>Indo Tropical Agriculture</span>
       </a>
-      <a href="/" class="md:hidden btn btn-ghost normal-case text-xl text-neutral-content">IAT</a>
+      <a href="/" class="md:hidden btn btn-ghost normal-case text-xl text-neutral">IAT</a>
     </div>
     <div class="navbar-center hidden lg:flex">
-      <ul class="menu menu-horizontal p-0">
-        <li v-for="menu in localizedMenus(lang)" class="text-neutral-content">
-          <a :href="menu.link" :class="{ active: menu.isActive }" class="font-bold">{{ menu.name }}</a>
+      <ul class="menu menu-horizontal px-1">
+        <li v-for="menu in localizedMenus(lang)">
+          <a :href="menu.link" :class="{ active: menu.isActive }" class="font-bold justify-between">
+            {{ menu.name }}
+            <svg v-if="menu.child" class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+              viewBox="0 0 24 24">
+              <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+            </svg>
+          </a>
+          <ul v-if="menu.child" class="p-2 bg-base-100">
+            <li v-for="submenu in menu.child"><a>{{ submenu }}</a></li>
+          </ul>
         </li>
       </ul>
     </div>
     <div class=" navbar-end">
       <div class="dropdown dropdown-end">
-        <label tabindex="0" class="btn btn-outlined btn-outlined m-1">{{ lang }}</label>
+        <label tabindex="0" class="btn btn-outlined btn-circle btn-primary m-1">{{ lang }}</label>
         <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
           <li>
             <a :href="route('lang', 'en')">
@@ -170,8 +193,8 @@ onMounted(() => {
   <!-- End navbar -->
 
   <!-- Home -->
-  <section class="max-h-screen w-screen" id="home">
-    <div class="hero min-h-screen" style="background-image: url('/storage/hero-image.jpeg')">
+  <section class="h-screen w-screen" id="home">
+    <div class="hero h-screen" style="background-image: url('/storage/hero-image.jpeg')">
       <div class="hero-overlay bg-opacity-60"></div>
       <div class="hero-content text-center text-neutral-content">
         <div class="max-w">
@@ -309,8 +332,6 @@ onMounted(() => {
     </div>
   </section>
   <!-- End contact us -->
-
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

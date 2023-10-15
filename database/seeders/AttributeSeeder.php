@@ -16,13 +16,6 @@ class AttributeSeeder extends Seeder
      */
     public function run()
     {
-        // Attribute::factory(11)->create();
-
-//        $attributes = [
-//            'Grade', 'Origin', 'Size', 'Age', 'Container Capacity', 'Stems', 'Inferior Cloves',
-//            'Admixture', 'Moisture', 'Skin Color', 'Flesh Color', 'Packaging',
-//        ];
-
         $attributes = [
             [
                 'name' => 'Grade',
@@ -30,7 +23,7 @@ class AttributeSeeder extends Seeder
             ],
             [
                 'name' => 'Origin',
-                'language' =>'en'
+                'language' => 'en'
             ],
             [
                 'name' => 'Size',
@@ -94,7 +87,8 @@ class AttributeSeeder extends Seeder
             ],
             [
                 'name' => 'Stämme',
-                'language' => 'de'],
+                'language' => 'de'
+            ],
             [
                 'name' => 'Inferiore Gewürznelken',
                 'language' => 'de'
