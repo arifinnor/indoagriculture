@@ -90,7 +90,7 @@ onMounted(() => {
   <Head title="Welcome" />
 
   <!-- navbar -->
-  <div class="navbar bg-base-200 sticky top-0 left-0 z-50 opacity-80 shadow-lg lg:shadow-2xl">
+  <div class="navbar bg-base-200 sticky top-0 left-0 z-50 opacity-95 shadow-lg lg:shadow-2xl">
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost lg:hidden">
@@ -133,8 +133,8 @@ onMounted(() => {
               <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
             </svg>
           </a>
-          <ul v-if="menu.child" class="p-2 bg-base-100">
-            <li v-for="submenu in menu.child"><a>{{ submenu }}</a></li>
+          <ul v-if="menu.child" class="p-2 bg-base-100 rounded-box">
+            <li v-for="submenu in menu.child"><a href="#our-products">{{ submenu }}</a></li>
           </ul>
         </li>
       </ul>
@@ -333,5 +333,3 @@ onMounted(() => {
   </section>
   <!-- End contact us -->
 </template>
-
-<style scoped></style>
